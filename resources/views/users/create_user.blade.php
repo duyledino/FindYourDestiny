@@ -10,7 +10,7 @@
 </head>
 <h1 class="mb-4">Create User</h1>
 
-<form action="/create" method="POST" class="max-w-md p-4 p-md-5 bg-white shadow rounded mx-auto">
+<form action="/create" method="POST" class="max-w-md p-4 p-md-5 bg-white shadow rounded mx-auto container">
     @csrf
 
     <div class="mb-3">
