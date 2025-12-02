@@ -14,25 +14,38 @@
         <div class="hidden md:flex items-center gap-9">
             <a class="text-sm font-medium leading-normal
             @if (count(explode('/', url()->current())) === 3) text-primary border-b-2 border-primary @endif
-             hover:text-primary transition-colors"
-                href="{{ route('homepage.get') }}">Trang chủ</a>
+             hover:text-primary transition-colors" href="{{ route('homepage.get') }}">Trang chủ</a>
             <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Tìm
                 kiếm</a>
             <a class="text-sm font-medium leading-normal 
             @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'connect') text-primary border-b-2 border-primary @endif
-            hover:text-primary transition-colors"
-                href="{{ route('connect.get') }}">Khám phá</a>
+            hover:text-primary transition-colors" href="{{ route('connect.get') }}">Khám phá</a>
             <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Blog</a>
         </div>
         <div class="flex items-center gap-2">
             @auth
+                <a href="{{ route('checkout.get') }}"
+                    class="group inline-flex items-center gap-x-2 rounded-full border border-pink-500/30 bg-white/10 px-4 py-1.5 backdrop-blur-md transition-all hover:border-pink-500 hover:bg-pink-500/20">
+                    <span
+                        class="flex h-6 w-6 items-center justify-center rounded-full bg-pink-500 text-white shadow-sm group-hover:bg-pink-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5">
+                            <path
+                                d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                        </svg>
+                    </span>
+
+                    <span class="text-sm font-semibold text-[#f42559] group-hover:text-pink-400">
+                        {{ auth()->user()->connect->connect_quantity }} Connects
+                    </span>
+                </a>
                 {{-- When user is logged in --}}
                 <a href="{{ route('profile.get') }}">
                     <button
                         class="flex min-w-[84px] gap-x-1 p-1 cursor-pointer items-center justify-center overflow-hidden">
                         <span class="truncate">{{ auth()->user()->user_name }}</span>
                         {{-- @dd(auth()->user()->user_image) --}}
-                        <img src="{{ auth()->user()->user_image === null || auth()->user()->user_image === "" ? asset('upload/Default_profile.png') : asset('storage/' . auth()->user()->user_image) }}" alt="User Avatar"
+                        <img src="{{ auth()->user()->user_image === null || auth()->user()->user_image === "" ? asset('upload/Default_profile.png') : asset('storage/' . auth()->user()->user_image) }}"
+                            alt="User Avatar"
                             class="w-10 h-10 rounded-full border-2 border-gray-300 dark:border-gray-700 object-cover cursor-pointer hover:ring-2 hover:ring-primary transition-all" />
                     </button>
                 </a>

@@ -71,7 +71,7 @@
                                                 {{ $user->user_name }}, {{ date('Y') - $user->year_of_birth }}</p>
                                             <p
                                                 class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">
-                                                {{ $user->user_address === null ? $user->user_address : 'Không tiết lộ' }}
+                                                {{ $user->user_address !== null ? $user->user_address : 'Không tiết lộ' }}
                                             </p>
                                             <p
                                                 class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal mt-1">

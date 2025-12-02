@@ -49,6 +49,10 @@ class User extends Authenticatable
     {
         return $this->hobbies()->exists();
     }
+    public function connect()
+    {
+        return $this->hasOne(Connect::class, "user_id", "user_id");
+    }
     protected static function boot()
     {
         parent::boot();

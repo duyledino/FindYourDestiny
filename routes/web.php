@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DateController;
 use App\Http\Middleware\AuthenticateUser;
 use Illuminate\Support\Facades\Route;
@@ -44,12 +45,17 @@ Route::prefix('profile')->middleware('auth')->group(function () {
 
 Route::prefix('connect')->group(function () {
     Route::get("/", function () {
-        return view("Connect");
+        return view("connect.Connect");
     })->name('connect.get');
 
     Route::get("/message", function () {
         return view("Message");
     })->name('message.get');
+    Route::post('checkout', [CheckoutController::class, 'checkout'])->name('checkout.post');
+    Route::get('checkout', function(){
+        return view('connect.Checkout');
+    })->name('checkout.get');
+    Route::get('checkout/result',[CheckoutController::class,'result'])->name('check.result.get');
 });
 
 Route::prefix("user")->name("user.")->group(function () {

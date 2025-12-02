@@ -64,7 +64,7 @@ class DateController extends Controller
         ]);
 
         $users = User::findMany([$request->user_id_connect, $request->user_id_be_connected], ['user_name', 'email'])->all();
-        Mail::to($users[1]->email)->send(new NotificationConnectMail($users[1]));
+        Mail::to($users[1]->email)->send(new NotificationConnectMail($users[0]));
         return redirect(route('user.detail', ["user_id" => $request->user_id_be_connected]))->with(['message' => 'Kết nối thành công hãy nhắn tin nào', 'alert-type' => 'success']);
     }
 }

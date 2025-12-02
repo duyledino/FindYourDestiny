@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RequestLogin;
 use App\Http\Requests\RequestRegister;
 use App\Mail\ForgetPasswordMail;
+use App\Models\Connect;
 use App\Models\Hobby;
 use App\Models\Role;
 use App\Models\User;
@@ -36,7 +37,7 @@ class AuthController extends Controller
         $validated = $request;
         $role = Role::where('role_name', '=', 'regular')->get();
         $user = User::create([
-            "user_id"=> Str::uuid(),
+            "user_id" => Str::uuid(),
             "user_name" => $validated['user_name'],
             "email" => $validated['email'],
             "user_image" => "", // because it is already in public when server is served
@@ -49,7 +50,12 @@ class AuthController extends Controller
             'role_id' => $role[0]->role_id,
             'user_id' => $user['user_id']
         ]);
-
+        Connect::create(
+            [
+                'user_id' => $user['user_id'],
+                'connect_quantity' => 0
+            ]
+        );
         Hobby::create([
             'user_id' => $user['user_id'],
             'hobbies_id' => Str::uuid(),

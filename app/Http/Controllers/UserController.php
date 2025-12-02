@@ -20,7 +20,7 @@ class UserController extends Controller
         $users = User::limit(5)->get();
         // dd($users);
 
-        return view('homepage', ["users" => $users]);
+        return view('Homepage', ["users" => $users]);
     }
 
 
@@ -52,7 +52,13 @@ class UserController extends Controller
         if ($request->hasFile('user_image')) {
             $file = $request->file('user_image');
             $fileName = strtr(Str::uuid(), 0, 8) . "-" . $file->getClientOriginalName();
-            $path = $file->storeAs('images', $fileName);
+            $path = $file->storeAs('images', $fileName, 'public');
+            $absolutePath = storage_path('app/public/images/' . $fileName);
+            // dd($absolutePath);
+            if (file_exists($absolutePath)) {
+                // dd($absolutePath);
+                chmod($absolutePath, 0644); // 0644 is standard for files, 0755 is for folders
+            }
             // dd($path);
         }
         $user = User::where('user_id', '=', $request->user_id)->update([

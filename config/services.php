@@ -34,5 +34,5 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'returnUrl' => env('APP_URL', 'http://127.0.0.1:8000') . '/connect/checkout/result',
 ];
