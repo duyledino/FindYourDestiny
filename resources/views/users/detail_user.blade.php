@@ -68,15 +68,16 @@
                                         <div class="flex flex-col justify-center">
                                             <p
                                                 class="text-[#181113] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">
-                                                {{ $user->user_name }}, {{ date('Y') - $user->year_of_birth }}</p>
-                                            <p
-                                                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">
+                                                {{ $user->user_name }}, {{ date('Y') - $user->year_of_birth }}
+                                            </p>
+                                            <p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">
                                                 {{ $user->user_address !== null ? $user->user_address : 'Không tiết lộ' }}
                                             </p>
                                             <p
                                                 class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal mt-1">
                                                 {{-- add slogan column --}}
-                                                {{ $user->slogan === null ? 'Chưa cập nhật' : $user->slogan }}</p>
+                                                {{ $user->slogan === null ? 'Chưa cập nhật' : $user->slogan }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="flex w-full max-w-[480px] gap-3 @[480px]:w-auto @[480px]:flex-col">
@@ -156,13 +157,11 @@
                                     <div class="flex flex-wrap gap-2">
                                         @if ($user->hobbies !== '')
                                             @foreach (explode(',', $user->hobbies) as $hobby)
-                                                <span
-                                                    class="bg-primary/20 text-primary text-sm font-medium px-3 py-1 rounded-full">
+                                                <span class="bg-primary/20 text-primary text-sm font-medium px-3 py-1 rounded-full">
                                                     {{ $hobby }} </span>
                                             @endforeach
                                         @else
-                                            <span
-                                                class="bg-primary/20 text-primary text-sm font-medium px-3 py-1 rounded-full">Chưa
+                                            <span class="bg-primary/20 text-primary text-sm font-medium px-3 py-1 rounded-full">Chưa
                                                 cập nhật</span>
                                             {{-- <span
                                                 class="bg-primary/20 text-primary text-sm font-medium px-3 py-1 rounded-full">Reading</span>
@@ -171,7 +170,8 @@
                                             <span
                                                 class="bg-primary/20 text-primary text-sm font-medium px-3 py-1 rounded-full">Yoga</span>
                                             <span
-                                                class="bg-primary/20 text-primary text-sm font-medium px-3 py-1 rounded-full">Traveling</span> --}}
+                                                class="bg-primary/20 text-primary text-sm font-medium px-3 py-1 rounded-full">Traveling</span>
+                                            --}}
                                         @endif
                                     </div>
                                 </div>
@@ -188,17 +188,26 @@
                                         <div>
                                             <p class="text-base font-bold text-[#181113] dark:text-white">Amount to Connect
                                             </p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">25 LuvCoins</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                {{ explode('.', $user->amount)[0] }} Connect
+                                            </p>
                                         </div>
                                     </div>
-                                    <button type="button" onclick="openModal()"
-                                        class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">
-                                        <span class="truncate">Connect Now</span>
-                                    </button>
+                                    @if ($user->amount === '0.00')
+                                        <button type="button"
+                                            class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-not-allowed items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-gray-500 text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">
+                                            <span class="truncate">Người dùng không hoạt động</span>
+                                        </button>
+                                    @else
+                                        <button type="button" onclick="openModal()"
+                                            class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">
+                                            <span class="truncate">Connect Now</span>
+                                        </button>
+                                    @endif
                                 </div>
                                 {{-- this is modal --}}
-                                <div id="myModal" class="relative z-50 hidden" aria-labelledby="modal-title"
-                                    role="dialog" aria-modal="true">
+                                <div id="myModal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
+                                    aria-modal="true">
 
                                     <div
                                         class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity duration-300 ease-out">
@@ -214,9 +223,8 @@
                                                     <div class="sm:flex sm:items-start">
                                                         <div
                                                             class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                            <svg class="h-6 w-6 text-primary" fill="none"
-                                                                viewBox="0 0 24 24" stroke-width="1.5"
-                                                                stroke="currentColor" aria-hidden="true">
+                                                            <svg class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24"
+                                                                stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                                     d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                                                             </svg>
@@ -267,8 +275,7 @@
                                             <p
                                                 class="text-[#181113] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">
                                                 Jessica, 28</p>
-                                            <p
-                                                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">
+                                            <p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">
                                                 San Francisco, CA</p>
                                             <p
                                                 class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal mt-1">
@@ -323,16 +330,14 @@
                                 About Me</h2>
                             <div class="px-4 py-2 flex flex-col gap-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div
-                                        class="flex items-center gap-3 bg-white dark:bg-background-dark/50 p-4 rounded-lg">
+                                    <div class="flex items-center gap-3 bg-white dark:bg-background-dark/50 p-4 rounded-lg">
                                         <span class="material-symbols-outlined text-primary text-2xl">person</span>
                                         <div>
                                             <p class="text-xs text-gray-500 dark:text-gray-400">Gender</p>
                                             <p class="font-bold text-sm text-[#181113] dark:text-white">Female</p>
                                         </div>
                                     </div>
-                                    <div
-                                        class="flex items-center gap-3 bg-white dark:bg-background-dark/50 p-4 rounded-lg">
+                                    <div class="flex items-center gap-3 bg-white dark:bg-background-dark/50 p-4 rounded-lg">
                                         <span class="material-symbols-outlined text-primary text-2xl">height</span>
                                         <div>
                                             <p class="text-xs text-gray-500 dark:text-gray-400">Height</p>
@@ -363,7 +368,7 @@
                                         <div>
                                             <p class="text-base font-bold text-[#181113] dark:text-white">Amount to Connect
                                             </p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">25 LuvCoins</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">25 Connect</p>
                                         </div>
                                     </div>
                                     <button type="button"
@@ -392,7 +397,7 @@
             modal.classList.add('hidden');
         }
         // Optional: Close modal if clicking outside the white box
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == document.querySelector('.fixed.inset-0.z-10')) {
                 closeModal();
             }

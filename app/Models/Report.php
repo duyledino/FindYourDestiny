@@ -11,14 +11,16 @@ class Report extends Model
     protected $primaryKey = 'report_id'; // primary key
     public $incrementing = false; // because UUID is not auto-increment
     protected $keyType = 'string'; // UUID is stored as string
-
+    public const CREATED_AT = 'create_at';
+    public const UPDATED_AT = null;
     protected $fillable = [
         'report_id',
         'report_name',
         'user_create_id',
+        'user_been_reported_name',
         'user_been_reported_id',
         'content',
-        'create_at'
+        'create_at',
     ];
 
     /**

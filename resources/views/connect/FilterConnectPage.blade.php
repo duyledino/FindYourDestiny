@@ -59,6 +59,9 @@
 
 @section('content')
     {{-- @dd($users) --}}
+    {{-- @dd($age_from,$age_to,$hobbies,$user_gender) --}}
+    {{-- @dd($total_page) --}}
+
     <div class="relative flex h-auto min-h-screen w-full flex-col">
         <main class="flex-grow container mx-auto px-10 py-8">
             <div class="lg:mb-0 mb-3 flex flex-1 items-center justify-end gap-4">
@@ -78,10 +81,10 @@
                 <!-- Left Sidebar: Filters -->
                 <aside class="col-span-12 lg:col-span-3">
                     <div class="sticky top-28">
-                        <form action="{{ route('filter.post') }}" method="POST"
+                        <form id="filter_form" action="{{ route('filter.post') }}" method="POST"
                             class="flex flex-col gap-6 rounded-lg bg-surface-light dark:bg-surface-dark p-6 border border-border-light dark:border-border-dark">
                             @csrf
-                            <input type="hidden" name="page" value="1">
+                            <input type="hidden" name="page" value="{{ $current_page }}">
                             <h3 class="text-xl font-bold text-text-light dark:text-text-dark">Filters</h3>
                             <!-- Age Slider -->
                             <div class="flex w-full flex-col items-start justify-between gap-3">
@@ -325,6 +328,27 @@
                             </div>
                         @endif
                         <!-- Pagination -->
+                        {{-- <nav class="flex items-center justify-center pt-8">
+                            <ul class="flex items-center gap-2">
+                                <li><a class="flex items-center justify-center size-10 rounded-full text-subtle-light dark:text-subtle-dark hover:bg-primary/10 hover:text-primary"
+                                        href="#"><span class="material-symbols-outlined !text-xl">chevron_left</span></a>
+                                </li>
+                                <li><a class="flex items-center justify-center size-10 rounded-full text-sm font-bold bg-primary text-white"
+                                        href="#">1</a></li>
+                                <li><a class="flex items-center justify-center size-10 rounded-full text-sm font-bold text-text-light dark:text-text-dark hover:bg-primary/10 hover:text-primary"
+                                        href="#">2</a></li>
+                                <li><a class="flex items-center justify-center size-10 rounded-full text-sm font-bold text-text-light dark:text-text-dark hover:bg-primary/10 hover:text-primary"
+                                        href="#">3</a></li>
+                                <li><span
+                                        class="flex items-center justify-center size-10 text-sm font-bold text-subtle-light dark:text-subtle-dark">...</span>
+                                </li>
+                                <li><a class="flex items-center justify-center size-10 rounded-full text-sm font-bold text-text-light dark:text-text-dark hover:bg-primary/10 hover:text-primary"
+                                        href="#">10</a></li>
+                                <li><a class="flex items-center justify-center size-10 rounded-full text-subtle-light dark:text-subtle-dark hover:bg-primary/10 hover:text-primary"
+                                        href="#"><span class="material-symbols-outlined !text-xl">chevron_right</span></a>
+                                </li>
+                            </ul>
+                        </nav> --}}
                         <nav class="flex items-center justify-center pt-8">
                             <!-- I added id="pagination-list" here -->
                             <ul id="pagination-list" class="flex items-center gap-2">
@@ -339,12 +363,30 @@
 
     <script defer>
         //Manipulate gender
+        const filter_form = document.getElementById("filter_form");
         const user_gender = document.querySelector("#user_gender");
         const genderFilter = document.querySelectorAll(".gender-filter");
         const labelGender = document.querySelectorAll(".labelGender");
         console.log(labelGender);
         labelGender[2].classList.add('border-2', 'px-[15px]', 'border-primary', 'text-primary');
         // user_gender.value = "All";
+        const loadGender = ()=>{
+            genderFilter.forEach((child, index) => {
+                    labelGender[index].classList.remove(
+                        'border-2', 'px-[15px]', 'border-primary', 'text-primary'
+                    );
+                    labelGender[index].classList.add('text-text-light');
+                    if(genderFilter[index].value === '{{ $user_gender }}'){
+                        console.log(genderFilter[index].value);
+                        labelGender[index].classList.remove('text-text-light', 'border-border-light');
+                        labelGender[index].classList.add('transition-all', 'border-2', 'px-[15px]', 'border-primary', 'text-primary');
+                    }
+                });
+
+        }
+        @if ($user_gender!=="")
+            loadGender();
+        @endif
         console.log(user_gender);
         genderFilter.forEach((item, i) => {
             item.addEventListener('click', () => {
@@ -367,7 +409,24 @@
         const inputInsertHobby = document.querySelector("#inputInsertHobby");
         const hobbiesContainer = document.querySelector("#hobbiesContainer");
         const inputHobbies = document.querySelector("#inputHobbies");
+        const loadHobbies = (hobbiesArray)=>{
+             hobbiesArray.forEach(item => {
+                const hobbyItemHTML = `
+            <span class="hobbyItem inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-sm font-medium text-primary bg-white dark:bg-gray-800 ring-1 ring-inset ring-primary/50 dark:ring-gray-700">
+                ${item}
+                <button onclick="deleteHobby()" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-primary/20" type="button">
+                    <span class="material-icons-outlined !text-xs text-primary group-hover:text-primary/80">close</span>
+                    </button>
+                    </span>
+                    `;
+                hobbiesContainer.insertAdjacentHTML('beforeend', hobbyItemHTML);
+            });
+        }
         let hobbiesArray = [];
+        @if(!empty($hobbies))
+            hobbiesArray = @json(explode(',', $hobbies));
+            loadHobbies(hobbiesArray);
+        @endif
         buttonInsertHobby.addEventListener('click', () => {
             console.log("click");
             if (inputInsertHobby.value !== "") {
@@ -417,6 +476,7 @@
             rangeNumberMin.textContent = rangeMin.value;
             age_from.value = rangeMin.value;
             age_to.value = rangeMax.value;
+            console.log(rangeMin.value,rangeMin.value);
             trackLength = rangeMax.value - rangeMin.value;
             const range = rangeMax.max - rangeMin.min;
             const minOffset = ((rangeMin.value - rangeMin.min) / range) * 100; // get currentMin.value excepts currentMin.min will be got from 0 to currentMin.value
@@ -496,6 +556,15 @@
         /* Case 3: In the Middle (1 ... 49 50 51 ... 100) */
         return [1, '...', current - 1, current, current + 1, '...', total];
     }
+
+    const clickNavNumber = (numberPage)=>{
+        const page = document.getElementsByName("page");
+        page[0].value = numberPage;
+        console.log(page[0].value);
+        filter_form.submit();
+    }
+
+    // 2. Function to Render HTML
     function renderPagination() {
         const range = getPaginationRange(currentPage, TOTAL_PAGES);
         let html = '';
@@ -504,10 +573,11 @@
         const prevDisabled = currentPage === 1;
         html += `
             <li>
-                <a href="/connect?current_page=${prevDisabled?1:currentPage -1}" 
+                <button
+                type="button" onclick="clickNavNumber(${prevDisabled?1:currentPage -1})" 
                    class="${STYLES.baseLink} ${prevDisabled ? STYLES.disabled : STYLES.arrow}">
                     <span class="material-symbols-outlined !text-xl">chevron_left</span>
-                </a>
+                </button>
             </li>
         `;
 
@@ -521,10 +591,10 @@
                 
                 html += `
                     <li>
-                        <a href="/connect?current_page=${item}" 
+                        <button type="button" onclick="clickNavNumber(${item})" 
                            class="${STYLES.baseLink} ${styleClass}">
                             ${item}
-                        </a>
+                        </button>
                     </li>
                 `;
             }
@@ -534,16 +604,17 @@
         const nextDisabled = currentPage === TOTAL_PAGES;
         html += `
             <li>
-                <a href="/connect?current_page=${nextDisabled ? currentPage : currentPage+1 }"
+                <button 
+                type="button" onclick="clickNavNumber(${nextDisabled ? currentPage : currentPage+1 })" 
+                href="/connect?current_page=${nextDisabled ? currentPage : currentPage+1 }"
                    class="${STYLES.baseLink} ${nextDisabled ? STYLES.disabled : STYLES.arrow}">
                     <span class="material-symbols-outlined !text-xl">chevron_right</span>
-                </a>
+                </button>
             </li>
         `;
 
         container.innerHTML = html;
     }
-    // Initial Render
     renderPagination();
     </script>
 @endsection

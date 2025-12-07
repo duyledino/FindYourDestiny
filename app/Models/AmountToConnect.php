@@ -14,6 +14,7 @@ class AmountToConnect extends Model
     protected $keyType = 'string';  // UUID stored as string
 
     protected $fillable = [
+        'amountConnect_id',
         'amount',
         'user_id',
     ];

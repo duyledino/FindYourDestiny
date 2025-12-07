@@ -70,10 +70,6 @@
                             </div> --}}
 
                             <div class="hidden md:flex items-center gap-9">
-                                <a class="text-sm font-medium leading-normal hover:text-primary transition-colors"
-                                    href="#">Khám Phá</a>
-                                <a class="text-sm font-medium leading-normal hover:text-primary transition-colors"
-                                    href="#">Tin Nhắn</a>
                                 <a class="text-primary text-sm font-bold leading-normal border-b-2 border-primary pb-1"
                                     href="#">Hồ Sơ</a>
                             </div>

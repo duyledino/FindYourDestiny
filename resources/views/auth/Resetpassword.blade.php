@@ -9,6 +9,8 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap"
         rel="stylesheet" />
@@ -82,7 +84,10 @@
                     </p>
                 </div>
                 <form class="flex flex-col gap-4" action="{{ route('resetpassword.post') }}" method="post">
-                    <input type="hidden" name="user_id" value="{{ explode('/', url()->current())[Count(explode('/', url()->current())) - 1] }}">
+                    <input type="hidden" name="user_id"
+                        value="{{ explode('/', url()->current())[Count(explode('/', url()->current())) - 2] }}">
+                    <input type="hidden" name="verify_token"
+                        value="{{ explode('/', url()->current())[Count(explode('/', url()->current())) - 1] }}">
                     @csrf
                     <div class="flex flex-col">
                         <label class="text-slate-800 dark:text-slate-300 text-base font-medium leading-normal pb-2"
@@ -116,5 +121,9 @@
         </main>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+@include('toast.toast-script')
 
 </html>

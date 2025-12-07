@@ -2,8 +2,8 @@
 <html lang="vi">
 
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LuvHub Notification</title>
 
     <style>
@@ -20,7 +20,7 @@
             background: #ffffff;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .header {
@@ -35,7 +35,7 @@
             height: 60px;
             margin: 0 auto 16px;
             border-radius: 999px;
-            background: rgba(255,255,255,0.25);
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(4px);
             display: flex;
             justify-content: center;
@@ -87,7 +87,9 @@
             color: #8e8e8e;
         }
 
-        a { color: #f42559; }
+        a {
+            color: #f42559;
+        }
     </style>
 
 </head>
@@ -112,14 +114,13 @@
             </p>
 
             <center>
-                <a href="{{ url('login/reset/' . $user->user_id . '/' . $user->verify_token) }}"
-                   class="button">
-                    Reset your password here
+                <a href="{{ url('login/confirm/' . $user->user_id . '/' . $user->verify_token) }}" class="button">
+                    Click here to confirm account
                 </a>
             </center>
 
             <p style="font-size:14px;color:#777;margin-top:20px;">
-                If you did not request this email, just ignore it.  
+                If you did not request this email, just ignore it.
                 This link will expire in 24 hours.
             </p>
 
@@ -129,9 +130,8 @@
                 Button not working? Copy and paste this link:
             </p>
 
-            <a href="{{ url('login/reset/' . $user->user_id . '/' . $user->verify_token) }}" 
-               class="footer-link">
-               {{ url('login/reset/' . $user->user_id . '/' . $user->verify_token) }}
+            <a href="{{ url('login/confirm/' . $user->user_id . '/' . $user->verify_token) }}" class="footer-link">
+                {{ url('login/confirm/' . $user->user_id . '/' . $user->verify_token) }}
             </a>
         </div>
 
@@ -139,7 +139,7 @@
         <div class="bottom">
             <p>&copy; 2024 LuvHub Inc. All rights reserved.</p>
             <p>
-                <a href="#" style="color:#f42559;">Privacy Policy</a> • 
+                <a href="#" style="color:#f42559;">Privacy Policy</a> •
                 <a href="#" style="color:#f42559;">Contact Support</a>
             </p>
         </div>
@@ -147,4 +147,5 @@
     </div>
 
 </body>
+
 </html>

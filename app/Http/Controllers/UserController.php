@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestEditUser;
+use App\Models\AmountToConnect;
 use App\Models\Hobby;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class UserController extends Controller
 
     public function homepage()
     {
-        $users = User::limit(5)->get();
+        $users = User::inRandomOrder()->limit(5)->get();
         // dd($users);
 
         return view('Homepage', ["users" => $users]);
@@ -28,11 +29,14 @@ class UserController extends Controller
     {
         $user = User::where('user_id', '=', $request['user_id'])->get();
         $hobbies = Hobby::where('user_id', '=', $request['user_id'])->get();
+        $amount = AmountToConnect::where('user_id','=',$request->user_id)->first();
         if (count($user) === 0) {
             return redirect()->route('homepage.get')->with('error', 'No user found.');
         }
+        $user[0]['amount']=$amount["amount"];
         $user[0]['hobbies'] = array();
         $user[0]['hobbies'] = $hobbies[0]['hobbies_name'] ?? "";
+        // dd($user);
         return view('users.detail_user', ["user" => $user[0]]);
     }
 
@@ -48,6 +52,9 @@ class UserController extends Controller
     public function edit(RequestEditUser $request)
     {
         // dd($request);
+        if($request["amount"] === "0" || $request["amount"] === '' || $request["amount"] === null){
+            return back()->with(["message"=>"Connect tối thiểu phải là 20","alert-type"=>"error"]);
+        }
         $path = "";
         if ($request->hasFile('user_image')) {
             $file = $request->file('user_image');
@@ -75,5 +82,5 @@ class UserController extends Controller
             'alert-type' => 'success',
         ]);
     }
-
+    
 }

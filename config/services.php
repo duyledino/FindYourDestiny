@@ -34,5 +34,11 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID', '402287724703-h6lodc14hv3vhq1q3g2ecvomeiqsjtij.apps.googleusercontent.com'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET', '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'),
+        'redirect' => env('GOOGLE_REDIRECT_URI', 'http://127.0.0.1:8000/login/google/callback'),
+    ],
     'returnUrl' => env('APP_URL', 'http://127.0.0.1:8000') . '/connect/checkout/result',
 ];

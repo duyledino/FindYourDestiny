@@ -11,6 +11,9 @@
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
         rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://js.pusher.com/8.3.0/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script>
         tailwind.config = {
@@ -37,50 +40,14 @@
     </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display text-[#181113] dark:text-white/90">
-    <div class="relative flex h-screen w-full flex-col group/design-root overflow-hidden">
-<header
-  class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-primary/20">
-  <nav class="container mx-auto flex items-center justify-between whitespace-nowrap px-4 sm:px-6 lg:px-8 py-3">
-    <div class="flex items-center gap-4 text-gray-900 dark:text-white">
-      <div class="size-8 text-primary">
-        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z"
-            fill="currentColor"></path>
-        </svg>
-      </div>
-      <h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">LuvHub</h2>
-    </div>
+@extends('layouts.main')
 
-    <div class="hidden md:flex items-center gap-9">
-      <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Khám Phá</a>
-      <a class="text-primary text-sm font-bold leading-normal border-b-2 border-primary pb-1" href="#">Tin Nhắn</a>
-      <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Hồ Sơ</a>
-    </div>
-
-
-                <div class="flex items-center gap-2">
-                    <button
-                        class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-black/5 dark:bg-white/10 text-[#181113] dark:text-white/90 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                        <span class="material-symbols-outlined text-xl">notifications</span>
-                    </button>
-                    <button
-                        class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-black/5 dark:bg-white/10 text-[#181113] dark:text-white/90 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                        <span class="material-symbols-outlined text-xl">settings</span>
-                    </button>
-                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                        data-alt="User profile picture"
-                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuColZUaa1YE0FqxOBUBeLXI0Y6KG5CLgE6xKdow_DMDvji709CMvc8qq_4MF8IzpnRnqG9Y2gGAISMa13LmE0NJJyZRV7rEwbUdB37kWvnFXMynIPi9jhKGWFte7tYYsNVZW5OYAp3i4mahmzBGCxCpb0d-aFs84DW0Ou7WB9m9m1u5qQGqW_u3x7jwRUlZWJn9NargC6ThpmnXft1MOzc6_vJIZj0Hw0H_yZnUoRaGlMugk9FLT3S-MDUnsE7OSWCHEILbsof4bN4g");'>
-                    </div>
-                </div>
-            </nav>
-
-        </header>
-        <main class="flex flex-1 overflow-hidden">
+@section('content')
+    <div class="relative flex h-[90%] w-full flex-col group/design-root overflow-hidden">
+        <main class="flex flex-1 relative  overflow-hidden">
             <!-- Conversation List Panel (Cột trái) -->
             <aside
-                class="w-full max-w-sm flex-shrink-0 border-r border-solid border-black/10 dark:border-white/10 flex flex-col bg-white dark:bg-background-dark/50">
+                class="md:w-full sm:flex hidden w-[250px] max-w-sm  shrink-0 border-r border-solid border-black/10 dark:border-white/10  flex-col bg-white dark:bg-background-dark/50">
                 <div class="p-4 border-b border-solid border-black/10 dark:border-white/10">
                     <h1 class="text-2xl font-bold text-[#181113] dark:text-white">Tin nhắn</h1>
                     <div class="pt-3">
@@ -98,200 +65,211 @@
                     </div>
                 </div>
                 <div class="flex-1 overflow-y-auto">
-                    <div
-                        class="flex items-center gap-4 bg-primary/20 dark:bg-primary/30 px-4 min-h-[72px] py-3 justify-between cursor-pointer border-l-4 border-primary">
-                        <div class="flex items-center gap-4 overflow-hidden">
-                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 flex-shrink-0"
-                                data-alt="Profile picture of Ngọc Anh"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZm4fUaCGk_piZxCQG9jee6liV1vUn9IkpwhTQsWloJnliBt452mOOEj8CsnnErUHLVB4g_49TA2HIIsv172gKQNyAlR313P0bPQvHsX6ho0qFMjHSUiHjmmDSJOvrr8Fquj6wng4Mfn_5OznIa22isLAA1oFAmoapG-9Hagw8SiBPPec-v3dfCBV6bJF8WiexFrhAPMvfhNIcpVzlGj-qhz-CfPnoUZ9FGbYfoiFpyZ_c6lB1ANYO7sCJO2ZmBvy650CeW6q3ZDV0");'>
+                    {{-- @dd($chats) --}}
+                    {{-- @dd(request()->query('current_chat')) --}}
+                    @if ($chats !== null)
+                        @foreach ($chats as $c)
+                            <a href="?chat_id={{ $c->chat_id }}">
+                                <div
+                                class="flex items-center gap-4 
+                                {{ ( request()->query('chat_id') !==null &&  $c->chat_id === request()->query('chat_id'))  ? "bg-primary/20 dark:bg-primary/30 border-l-4 border-primary" : "bg-white dark:bg-transparent hover:bg-black/5 dark:hover:bg-white/5" }}
+                                px-4 min-h-[72px] py-3 justify-between cursor-pointer ">
+                                <div class="flex items-center gap-4 overflow-hidden">
+                                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 shrink-0"
+                                        data-alt="Profile picture of {{$c->user2_name}}"
+                                        style='background-image: url("{{ $c->user2_image === null || $c->user2_image === "" ? asset('upload/Default_profile.png') : asset('storage/' . $c->user2_image) }}");'>
+                                    </div>
+                                    <div class="flex flex-col justify-center overflow-hidden">
+                                        <p class="text-[#181113] dark:text-white text-base font-bold leading-normal line-clamp-1">
+                                            {{ $c->user2_name }}</p>
+                                        <p
+                                            class="{{ $c->user_id_send !== auth()->user()->user_id && $c->message_status === 'unseen' ? 'text-primary dark:text-primary/90' : 'text-gray-400' }} text-sm font-medium leading-normal line-clamp-1">
+                                            {{ $c->content === null ? "" : $c->content }}</p>
+                                    </div>
+                                </div>
+                                @if ($c->user_id_send !== auth()->user()->user_id && $c->message_status !== null && $c->message_status === "unseen")
+                                    <div class="shrink-0 flex flex-col items-end gap-1.5">
+                                        <p class="text-primary dark:text-primary/90 text-xs font-semibold leading-normal">{{ $c->message_create_at }}
+                                        </p>
+                                        <div class="flex size-6 items-center justify-center rounded-full bg-primary"><span
+                                                class="text-xs font-bold text-white"></span></div>
+                                    </div>                                    
+                                @endif
                             </div>
-                            <div class="flex flex-col justify-center overflow-hidden">
-                                <p
-                                    class="text-[#181113] dark:text-white text-base font-bold leading-normal line-clamp-1">
-                                    Ngọc Anh</p>
-                                <p
-                                    class="text-primary dark:text-primary/90 text-sm font-medium leading-normal line-clamp-1">
-                                    Cho mình cái địa chỉ!</p>
-                            </div>
-                        </div>
-                        <div class="shrink-0 flex flex-col items-end gap-1.5">
-                            <p class="text-primary dark:text-primary/90 text-xs font-semibold leading-normal">10:42 AM
-                            </p>
-                            <div class="flex size-6 items-center justify-center rounded-full bg-primary"><span
-                                    class="text-xs font-bold text-white">1</span></div>
-                        </div>
+                            </a>
+                        @endforeach
+                    @endif
+                </div>
+            </aside>
+            <aside
+                id="my_aside"
+                class="sm:hidden transition-all absolute inset-0 z-10 flex w-full -left-full shrink-0 border-r border-solid border-black/10 dark:border-white/10  flex-col bg-white dark:bg-background-dark/50">
+                <div class="p-4 border-b border-solid border-black/10 dark:border-white/10">
+                    <div class="flex justify-between">
+                        <h1 class="text-2xl font-bold text-[#181113] dark:text-white">Tin nhắn</h1>
+                        <h1 class="text-primary font-bold">
+                            <span id="close_aside" class="material-symbols-outlined text-2xl cursor-pointer">close</span>
+                        </h1>
                     </div>
-                    <div
-                        class="flex items-center gap-4 bg-white dark:bg-transparent hover:bg-black/5 dark:hover:bg-white/5 px-4 min-h-[72px] py-3 justify-between cursor-pointer border-l-4 border-transparent">
-                        <div class="flex items-center gap-4 overflow-hidden">
-                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 flex-shrink-0"
-                                data-alt="Profile picture of Minh Tuấn"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBuxRdbFmcLrrWG2rIbGk1z9u62olJgHlTA9cGFZDqMwyicOHNpXKUoDJkaE_ToXXCJvUWWUnjB0vm09AQdok0V9dH3K4M71ltKJveFSBPGkINJxEnrBpNZGUjSWn0fEI5jp9dM3MmQKc2bs_iocsXHB3RB8DoBkjVkJsYXOL3u2Pfyq7PFuEv8uYdj_7QlcYVSRpqBhvihzn4cLfQgF-m4yfaJmqwNyspU7SJzKms7DFny5Q8L1JImEx5QS5JHgcnmCqpRUXogiIsE");'>
+                    <div class="pt-3">
+                        <label class="flex flex-col min-w-40 h-12 w-full">
+                            <div class="flex w-full flex-1 items-stretch rounded-full h-full">
+                                <div
+                                    class="text-[#8a606b] dark:text-white/50 flex border-none bg-background-light dark:bg-black/20 items-center justify-center pl-4 rounded-l-full border-r-0">
+                                    <span class="material-symbols-outlined text-xl">search</span>
+                                </div>
+                                <input
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full text-[#181113] dark:text-white/90 focus:outline-0 focus:ring-0 border-none bg-background-light dark:bg-black/20 focus:border-none h-full placeholder:text-[#8a606b] dark:placeholder:text-white/50 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal"
+                                    placeholder="Tìm kiếm cuộc trò chuyện" value="" />
                             </div>
-                            <div class="flex flex-col justify-center overflow-hidden">
-                                <p
-                                    class="text-[#181113] dark:text-white text-base font-medium leading-normal line-clamp-1">
-                                    Minh Tuấn</p>
-                                <p
-                                    class="text-[#8a606b] dark:text-white/60 text-sm font-normal leading-normal line-clamp-1">
-                                    Bạn có rảnh vào cuối tuần này không?</p>
-                            </div>
-                        </div>
-                        <div class="shrink-0 flex flex-col items-end gap-1.5">
-                            <p class="text-[#8a606b] dark:text-white/60 text-xs font-normal leading-normal">9:15 AM</p>
-                        </div>
+                        </label>
                     </div>
-                    <div
-                        class="flex items-center gap-4 bg-white dark:bg-transparent hover:bg-black/5 dark:hover:bg-white/5 px-4 min-h-[72px] py-3 justify-between cursor-pointer border-l-4 border-transparent">
-                        <div class="flex items-center gap-4 overflow-hidden">
-                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 flex-shrink-0"
-                                data-alt="Profile picture of Hà Trang"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsxMKEdjlAeLPUeymxRBumrUgmmXNdhT_hLvj711j1e3F-nMGmHGF6AKhnoWoRV47lyc6KUrBM9ZUJaBVOpahSOhlWrTzkWcBEO6UDnShByaUrhla7YQLpamLBnjbG5M5PkjnDSHN9R28cTOymGiE2RrHqxDf_ez0lpkJn0PXtZ57xdzTkhp3lVlgT-ZJBAnMQI-ER80SyRUBADj8lKMXrJw3wv9SVEHTH3Fm5rNv_WWeDcX8LT2Y-d_pbWZ1pDFoqfcjCWkAgengz");'>
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                    {{-- @dd($chats) --}}
+                    {{-- @dd(request()->query('current_chat')) --}}
+                    @if ($chats !== null)
+                        @foreach ($chats as $c)
+                            <a href="?chat_id={{ $c->chat_id }}">
+                                <div
+                                class="flex items-center gap-4 
+                                {{ ( request()->query('chat_id') !==null &&  $c->chat_id === request()->query('chat_id'))  ? "bg-primary/20 dark:bg-primary/30 border-l-4 border-primary" : "bg-white dark:bg-transparent hover:bg-black/5 dark:hover:bg-white/5" }}
+                                px-4 min-h-[72px] py-3 justify-between cursor-pointer ">
+                                <div class="flex items-center gap-4 overflow-hidden">
+                                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 shrink-0"
+                                        data-alt="Profile picture of {{$c->user2_name}}"
+                                        style='background-image: url("{{ $c->user2_image === null || $c->user2_image === "" ? asset('upload/Default_profile.png') : asset('storage/' . $c->user2_image) }}");'>
+                                    </div>
+                                    <div class="flex flex-col justify-center overflow-hidden">
+                                        <p class="text-[#181113] dark:text-white text-base font-bold leading-normal line-clamp-1">
+                                            {{ $c->user2_name }}</p>
+                                        <p
+                                            class="{{ $c->user_id_send !== auth()->user()->user_id && $c->message_status === 'unseen' ? 'text-primary dark:text-primary/90' : 'text-gray-400' }} text-sm font-medium leading-normal line-clamp-1">
+                                            {{ $c->content === null ? "" : $c->content }}</p>
+                                    </div>
+                                </div>
+                                @if ($c->user_id_send !== auth()->user()->user_id && $c->message_status !== null && $c->message_status === "unseen")
+                                    <div class="shrink-0 flex flex-col items-end gap-1.5">
+                                        <p class="text-primary dark:text-primary/90 text-xs font-semibold leading-normal">{{ $c->message_create_at }}
+                                        </p>
+                                        <div class="flex size-6 items-center justify-center rounded-full bg-primary"><span
+                                                class="text-xs font-bold text-white"></span></div>
+                                    </div>                                    
+                                @endif
                             </div>
-                            <div class="flex flex-col justify-center overflow-hidden">
-                                <p
-                                    class="text-[#181113] dark:text-white text-base font-medium leading-normal line-clamp-1">
-                                    Hà Trang</p>
-                                <p
-                                    class="text-[#8a606b] dark:text-white/60 text-sm font-normal leading-normal line-clamp-1">
-                                    Mình cũng thích đọc sách lắm.</p>
-                            </div>
-                        </div>
-                        <div class="shrink-0 flex flex-col items-end gap-1.5">
-                            <p class="text-[#8a606b] dark:text-white/60 text-xs font-normal leading-normal">Hôm qua</p>
-                        </div>
-                    </div>
-                    <div
-                        class="flex items-center gap-4 bg-white dark:bg-transparent hover:bg-black/5 dark:hover:bg-white/5 px-4 min-h-[72px] py-3 justify-between cursor-pointer border-l-4 border-transparent">
-                        <div class="flex items-center gap-4 overflow-hidden">
-                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 flex-shrink-0"
-                                data-alt="Profile picture of Anh Khôi"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB96cbUslHN2soyxUpInQ4XJrBhqZUBqFipg2i-WPjRbOKqdOWez8JoI1izMhHZY3GU1lM6YxHUTYfybXsOy7wh9cA1f7vuNwmfflLM0f-l1FyKlZ_3Duo80_8-77FS0UcDQMj-k0bw4oS4-4ngnui5x3MdxiCiPJNkl9LLHKx2fiibDSBdOGFXHatDr_Q--64CfW4NuoSPUtkgS2M8l1F3hDjCXz2CSuSlpZB8jMkHweTNSGRnlCpu_EPhhExx-NjJl6Tn52RQFMYb");'>
-                            </div>
-                            <div class="flex flex-col justify-center overflow-hidden">
-                                <p
-                                    class="text-[#181113] dark:text-white text-base font-medium leading-normal line-clamp-1">
-                                    Anh Khôi</p>
-                                <p
-                                    class="text-[#8a606b] dark:text-white/60 text-sm font-normal leading-normal line-clamp-1">
-                                    Tuyệt vời! Hẹn gặp bạn nhé.</p>
-                            </div>
-                        </div>
-                        <div class="shrink-0 flex flex-col items-end gap-1.5">
-                            <p class="text-[#8a606b] dark:text-white/60 text-xs font-normal leading-normal">Thứ 3</p>
-                        </div>
-                    </div>
+                            </a>
+                        @endforeach
+                    @endif
                 </div>
             </aside>
             <!-- Chat Window Panel (Cột phải) -->
-            <section class="flex-1 flex flex-col bg-background-light dark:bg-background-dark">
+            @if ($current_chat !== null && request()->query('chat_id') !== null && $current_chat['chat_id'] === request()->query('chat_id'))
+            @php
+                $current_chat_id = request()->query('chat_id');
+                // dd($chats);
+                // dd($current_chat_id);
+                $current_chat_item = array_filter($chats ?? [], function($c) use ($current_chat_id) {
+                    return $c->chat_id == $current_chat_id; // có use mới dùng trong này được !!
+                });
+
+                if ($current_chat_item) {
+                    // dd($current_chat);
+                    // dd($current_chat_item[0]->user2_name);
+                    $current_chat['user2_id'] = $current_chat_item[0]->user2_id ?? null;
+                    $current_chat['user2_image'] = $current_chat_item[0]->user2_image ?? null;
+                    $current_chat['user2_name'] = $current_chat_item[0]->user2_name ?? null;
+                }
+            @endphp
+            {{-- @dd($current_chat) --}}
+            <section class="flex-1 flex flex-col bg-background-light dark:bg-background-dark relative">
+                <h1 class=" absolute left-3 top-3 text-primary font-bold sm:hidden block">
+                            <span id="open_aside" class="material-symbols-outlined text-2xl cursor-pointer">menu</span>
+                </h1>
                 <!-- Chat Header -->
                 <div
-                    class="flex-shrink-0 flex items-center justify-between p-4 border-b border-solid border-black/10 dark:border-white/10">
+                    class="shrink-0 flex items-center justify-between p-1 px-4 border-b border-solid border-black/10 dark:border-white/10">
                     <div class="flex items-center gap-4">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12"
+                        <div class="bg-center sm:ml-0 ml-8 bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12"
                             data-alt="Profile picture of Ngọc Anh"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZm4fUaCGk_piZxCQG9jee6liV1vUn9IkpwhTQsWloJnliBt452mOOEj8CsnnErUHLVB4g_49TA2HIIsv172gKQNyAlR313P0bPQvHsX6ho0qFMjHSUiHjmmDSJOvrr8Fquj6wng4Mfn_5OznIa22isLAA1oFAmoapG-9Hagw8SiBPPec-v3dfCBV6bJF8WiexFrhAPMvfhNIcpVzlGj-qhz-CfPnoUZ9FGbYfoiFpyZ_c6lB1ANYO7sCJO2ZmBvy650CeW6q3ZDV0");'>
+                            style='background-image: url("{{ $current_chat['user2_image'] === null || $current_chat['user2_image'] === "" ? asset('upload/Default_profile.png') : asset('storage/' . $current_chat['user2_image']) }}");'>
                         </div>
                         <div>
-                            <p class="text-[#181113] dark:text-white text-lg font-bold">Ngọc Anh</p>
+                            <p class="text-[#181113] dark:text-white text-lg font-bold">{{ $current_chat['user2_name'] }}</p>
                             <p class="text-green-600 dark:text-green-400 text-sm font-medium">Đang hoạt động</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button
+                    <div class="flex items-center gap-2 relative">
+                        {{-- @dd($current_chat) --}}
+                        <a href="{{ route('user.detail',["user_id"=>$current_chat['user2_id']]) }}">
+                            <button
                             class="flex items-center justify-center size-10 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-[#181113] dark:text-white/90">
-                            <span class="material-symbols-outlined text-2xl">person</span>
-                        </button>
+                                <span class="material-symbols-outlined text-2xl">person</span>
+                            </button>
+                        </a>
                         <button
-                            class="flex items-center justify-center size-10 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-[#181113] dark:text-white/90">
+                            id="threeDots"
+                            class="flex relative items-center justify-center size-10 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-[#181113] dark:text-white/90">
                             <span class="material-symbols-outlined text-2xl">more_vert</span>
                         </button>
+                        <div id="reportContainer" class="bg-white p-1 hidden rounded-[10px] absolute -bottom-14 right-2 transition-all">
+                            <button
+                                type="button"
+                                id="reportBtn1"
+                                class="items-center inline-flex gap-2 px-4 text-[12px] py-2 rounded-[10px] bg-red-600 hover:bg-red-700 text-white font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300"
+                                aria-label="Report this user"
+                                >
+                                <span class="material-symbols-outlined text-2xl">flag</span>
+                                Report
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <!-- Message History Area -->
-                <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                <div id="chat_container" class="flex-1 overflow-y-auto p-6 space-y-6">
                     <div class="text-center my-4">
                         <span
                             class="text-xs text-[#8a606b] dark:text-white/60 bg-white dark:bg-black/20 px-3 py-1 rounded-full">Hôm
                             nay</span>
                     </div>
-                    <!-- Message from other user -->
-                    <div class="flex items-start gap-3">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 flex-shrink-0"
-                            data-alt="Profile picture of Ngọc Anh"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZm4fUaCGk_piZxCQG9jee6liV1vUn9IkpwhTQsWloJnliBt452mOOEj8CsnnErUHLVB4g_49TA2HIIsv172gKQNyAlR313P0bPQvHsX6ho0qFMjHSUiHjmmDSJOvrr8Fquj6wng4Mfn_5OznIa22isLAA1oFAmoapG-9Hagw8SiBPPec-v3dfCBV6bJF8WiexFrhAPMvfhNIcpVzlGj-qhz-CfPnoUZ9FGbYfoiFpyZ_c6lB1ANYO7sCJO2ZmBvy650CeW6q3ZDV0");'>
-                        </div>
-                        <div class="flex flex-col items-start max-w-lg">
-                            <div class="bg-white dark:bg-background-dark/80 rounded-r-lg rounded-bl-lg p-3">
-                                <p class="text-sm leading-relaxed text-[#181113] dark:text-white/90">Chào bạn, mình thấy
-                                    hồ sơ của bạn rất thú vị. Rất vui được làm quen!</p>
+                    @foreach ($current_chat as $key=>$c)
+                        @if(is_numeric($key)===true)
+
+                        <div class="flex items-start gap-3 {{ $c['user_id'] === auth()->user()->user_id ? 'flex-row-reverse' : '' }}">
+                            @if ($c['user_id'] !== auth()->user()->user_id)
+                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shrink-0"
+                                    data-alt="Profile picture of {{ $current_chat['user2_name'] }}"
+                                    style='background-image: url("{{ $current_chat['user2_image'] === null || $current_chat['user2_image'] === "" ? asset('upload/Default_profile.png') : asset('storage/' . $current_chat['user2_image']) }}");'>
+                                </div>
+                            @endif
+                            <div class="flex flex-col items-start max-w-lg">
+                                <div class="{{ $c['user_id'] === auth()->user()->user_id ? 'bg-primary text-white' :'bg-white dark:bg-background-dark/80'}} rounded-r-lg rounded-bl-lg p-3">
+                                    <p class="text-sm leading-relaxed {{ $c['user_id'] === auth()->user()->user_id ? 'text-white' : 'text-[#181113]' }}  dark:text-white/90">{{ $c['content'] }}</p>
+                                </div>
+                                <span class="text-xs {{$c['user_id'] === auth()->user()->user_id ?'self-end':'' }} text-[#8a606b] dark:text-white/60 mt-1.5">{{ explode(' ',$c['create_at'])[1] }}</span>
+                                @if ($c['user_id'] === auth()->user()->user_id && $c['status'] === 'seen')
+                                    <span class="text-xs text-[#8a606b] dark:text-white/60 mt-1.5 flex items-center self-end gap-1">Đã
+                                xem <span class="material-symbols-outlined text-base text-primary">done_all</span></span>
+                                @endif
                             </div>
-                            <span class="text-xs text-[#8a606b] dark:text-white/60 mt-1.5">10:40 AM</span>
                         </div>
-                    </div>
-                    <!-- Message from current user -->
-                    <div class="flex items-start gap-3 flex-row-reverse">
-                        <div class="flex flex-col items-end max-w-lg">
-                            <div class="bg-primary text-white rounded-l-lg rounded-br-lg p-3">
-                                <p class="text-sm leading-relaxed">Chào Ngọc Anh! Mình cũng rất vui khi được bạn chú ý.
-                                    Bạn có thích đi xem phim không?</p>
-                            </div>
-                            <span class="text-xs text-[#8a606b] dark:text-white/60 mt-1.5 flex items-center gap-1">Đã
-                                xem <span
-                                    class="material-symbols-outlined text-base text-primary">done_all</span></span>
-                        </div>
-                    </div>
-                    <!-- Message from other user -->
-                    <div class="flex items-start gap-3">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 flex-shrink-0"
-                            data-alt="Profile picture of Ngọc Anh"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZm4fUaCGk_piZxCQG9jee6liV1vUn9IkpwhTQsWloJnliBt452mOOEj8CsnnErUHLVB4g_49TA2HIIsv172gKQNyAlR313P0bPQvHsX6ho0qFMjHSUiHjmmDSJOvrr8Fquj6wng4Mfn_5OznIa22isLAA1oFAmoapG-9Hagw8SiBPPec-v3dfCBV6bJF8WiexFrhAPMvfhNIcpVzlGj-qhz-CfPnoUZ9FGbYfoiFpyZ_c6lB1ANYO7sCJO2ZmBvy650CeW6q3ZDV0");'>
-                        </div>
-                        <div class="flex flex-col items-start max-w-lg">
-                            <div class="bg-white dark:bg-background-dark/80 rounded-r-lg rounded-bl-lg p-3">
-                                <p class="text-sm leading-relaxed text-[#181113] dark:text-white/90">Ồ, mình rất thích
-                                    xem phim, đặc biệt là phim hài lãng mạn. :)</p>
-                            </div>
-                            <span class="text-xs text-[#8a606b] dark:text-white/60 mt-1.5">10:41 AM</span>
-                        </div>
-                    </div>
-                    <!-- Message from current user -->
-                    <div class="flex items-start gap-3 flex-row-reverse">
-                        <div class="flex flex-col items-end max-w-lg">
-                            <div class="bg-primary text-white rounded-l-lg rounded-br-lg p-3">
-                                <p class="text-sm leading-relaxed">Vậy cuối tuần này có một phim mới ra rạp hay lắm, bạn
-                                    có muốn đi xem cùng mình không?</p>
-                            </div>
-                            <span class="text-xs text-[#8a606b] dark:text-white/60 mt-1.5 flex items-center gap-1">Đã
-                                xem <span
-                                    class="material-symbols-outlined text-base text-primary">done_all</span></span>
-                        </div>
-                    </div>
-                    <!-- Message from other user (last message) -->
-                    <div class="flex items-start gap-3">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 flex-shrink-0"
-                            data-alt="Profile picture of Ngọc Anh"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZm4fUaCGk_piZxCQG9jee6liV1vUn9IkpwhTQsWloJnliBt452mOOEj8CsnnErUHLVB4g_49TA2HIIsv172gKQNyAlR313P0bPQvHsX6ho0qFMjHSUiHjmmDSJOvrr8Fquj6wng4Mfn_5OznIa22isLAA1oFAmoapG-9Hagw8SiBPPec-v3dfCBV6bJF8WiexFrhAPMvfhNIcpVzlGj-qhz-CfPnoUZ9FGbYfoiFpyZ_c6lB1ANYO7sCJO2ZmBvy650CeW6q3ZDV0");'>
-                        </div>
-                        <div class="flex flex-col items-start max-w-lg">
-                            <div class="bg-white dark:bg-background-dark/80 rounded-r-lg rounded-bl-lg p-3">
-                                <p class="text-sm leading-relaxed text-[#181113] dark:text-white/90">Cho mình cái địa chỉ!</p>
-                            </div>
-                            <span class="text-xs text-[#8a606b] dark:text-white/60 mt-1.5">10:42 AM</span>
-                        </div>
-                    </div>
+                        @endif
+                    @endforeach
+                    @if ($current_chat!==null)
+                        <div id="scrollBottom"></div>
+                    @endif
                 </div>
+
                 <!-- Message Input Form -->
-                <div
-                    class="flex-shrink-0 p-4 bg-white dark:bg-background-dark/50 border-t border-solid border-black/10 dark:border-white/10">
+                <form id="input_form"
+                    class="shrink-0 p-4 bg-white dark:bg-background-dark/50 border-t border-solid border-black/10 dark:border-white/10">
                     <div class="flex items-center gap-3">
                         <button
                             class="flex items-center justify-center size-10 rounded-full hover:bg-primary/20 dark:hover:bg-primary/30 text-primary flex-shrink-0">
                             <span class="material-symbols-outlined text-2xl">add_circle</span>
                         </button>
                         <div class="relative flex-1">
-                            <input
+                        <input
+                            id="input_message"
                                 class="form-input w-full h-12 px-4 pr-24 rounded-full bg-background-light dark:bg-black/20 border-none focus:ring-2 focus:ring-primary text-sm text-[#181113] dark:text-white/90 placeholder:text-[#8a606b] dark:placeholder:text-white/50"
                                 placeholder="Nhập tin nhắn của bạn..." type="text" />
                             <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
@@ -306,14 +284,219 @@
                             </div>
                         </div>
                         <button
-                            class="flex items-center justify-center size-12 rounded-full bg-primary hover:bg-primary/90 text-white flex-shrink-0">
+                            type="submit"
+                            class="flex items-center justify-center size-12 rounded-full bg-primary hover:bg-primary/90 text-white shrink-0">
                             <span class="material-symbols-outlined text-2xl">send</span>
                         </button>
                     </div>
-                </div>
+                </form>
             </section>
+            @else
+            <section class="flex-1 flex flex-col bg-background-light dark:bg-background-dark">
+            </section>
+            @endif
         </main>
     </div>
-</body>
+    {{-- Report modal --}}
+    @if ($current_chat !== null)
+        <div id="reportModal" 
+     class="fixed z-[99] inset-0 bg-black bg-opacity-80 hidden items-center justify-center">
+    
+    <!-- Modal Box -->
+            <form action="{{ route('report.post') }}" id="reportForm" class="bg-white sm:w-[70%] w-96 rounded-xl shadow-lg p-6" method="POST">
+                @csrf
+                <h2 class="text-xl font-bold mb-4">Report User</h2>
+
+                <!-- Fields -->
+                <div class="space-y-3">
+                    <div>
+                        <label class="font-semibold">Report Name</label>
+                        <input id="report_name" 
+                            class="w-full border rounded p-2" 
+                            name="report_name"
+                            type="text" placeholder="Quấy rối, Spam, etc.">
+                            @error('report_name')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                    </div>
+
+                    <div>
+                        <label class="font-semibold">User ID</label>
+                        <input id="user_id" 
+                        name="user_been_reported_id"
+                            class="w-full border rounded p-2 bg-gray-100" 
+                            type="text" readonly 
+                            value="{{ $current_chat['user2_id'] }}"
+                            >
+                            @error('user_been_reported_id')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="font-semibold">User Name</label>
+                        <input id="user_name" 
+                        name="user_been_reported_name"
+                            class="w-full border rounded p-2 bg-gray-100" 
+                            type="text" readonly
+                            value="{{ $current_chat['user2_name'] }}"
+                            >
+                            @error('user_been_reported_name')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="font-semibold">Content</label>
+                        <textarea id="content" 
+                            name="content"
+                                class="w-full border rounded p-2 h-20"></textarea>
+                        @error('content')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="font-semibold">Created At</label>
+                        <input id="create_at" 
+                        name="create_at"
+                            class="w-full border rounded p-2 bg-gray-100" 
+                            type="text" readonly
+                            value="{{ now() }}"
+                            >
+                        @error('create_at')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-end gap-3 mt-5">
+                    <button 
+                    type="button"
+                        onclick="closeReportModal()" 
+                        class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">
+                        Cancel
+                    </button>
+
+                    <button 
+                    type="submit"
+                        {{-- onclick="submitReport()"  --}}
+                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                        Report
+                    </button>
+                </div>
+            </form>
+    </div>
+    @endif
+    <script defer>
+        // scroll to view here
+        @if ($current_chat!==null)
+            document.getElementById("scrollBottom").scrollIntoView({ behavior: "smooth" });
+            const chat_container = document.getElementById("chat_container");
+            chat_container.lastElementChild.remove();
+            const input_form = document.querySelector("#input_form");
+            input_form.addEventListener('submit',async function sendMessage(e) {
+                e.preventDefault();
+                const msg = document.getElementById("input_message").value;            
+                if (!msg.trim()) return;
+                await axios.post('/connect/message', {
+                    chat_id: chatId,
+                    content: msg
+                });
+                addMessage(userId,msg,'{{ now() }}'.split(' ')[1]);
+                document.getElementById("input_message").value = "";
+            })
+            // report button here
+                const reportContainer = document.querySelector("#reportContainer");
+                const reportBtn1 = document.querySelector("#reportBtn1");
+                const threeDots = document.querySelector("#threeDots");
+                const reportModal = document.querySelector("#reportModal");
+                threeDots.addEventListener('click',()=>{
+                    // console.log(reportContainer);
+                    reportContainer.classList.toggle("hidden");
+                })
+                reportBtn1.addEventListener('click',()=>{
+                    reportModal.classList.add('flex')
+                    reportModal.classList.remove('hidden');
+                });
+                const closeReportModal = ()=>{
+                    reportModal.classList.add('hidden');
+                    reportModal.classList.remove('flex');
+                }
+                // const submitReport = ()=>{
+                //     document.querySelector("#reportForm").submit();
+                // }
+        @endif
+        const open_aside = document.querySelector("#open_aside");
+        const close_aside = document.querySelector("#close_aside");
+        const my_aside = document.querySelector("#my_aside");
+        const chatId = document.location.search.slice(9);
+        const userId = '{{ auth()->user()->user_id }}';
+        console.log(chatId);
+        open_aside.addEventListener('click',()=>{
+            my_aside.classList.add('left-0');
+        });
+        close_aside.addEventListener('click',(e)=>{
+            console.log(e);
+            my_aside.classList.remove('left-0')
+        });
+        // 1. Configure Pusher
+
+        const pusher = new Pusher("0055932795ba120fba8b", {
+            cluster: "ap1",
+        });
+        // 2. Subscribe to private chat channel
+        const channel = pusher.subscribe("chat." + chatId);
+        channel.bind('my-event',(data)=>{
+            if (data.user_id == userId) {
+                return;
+            }
+            console.log("other sent: ",data.create_at.split('T')[1].slice(0,8));
+            addMessage(data.user_id,data.content,data.create_at.split('T')[1].slice(0,8));
+        })
+
+        function addMessage(user_id,text,time) {
+            @if($current_chat!==null)
+                const isMine = userId === user_id;
+                
+                const profileUrl = "{{  $current_chat['user2_image'] === null || $current_chat['user2_image'] === '' ? asset('upload/Default_profile.png') : asset('storage/' . $current_chat['user2_image']) }}";
+                let html = `
+                    <div class="scrollBottom flex items-start gap-3 ${isMine ? 'flex-row-reverse' : ''}">
+                        ${!isMine ? `
+                            <div class=" bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shrink-0"
+                                style="background-image: url(${profileUrl})">
+                            </div>
+                        ` : ''}
+                        
+                        <div class="flex flex-col items-start max-w-lg">
+                            <div class="${isMine ? 'bg-primary text-white' : 'bg-white dark:bg-background-dark/80'} rounded-r-lg rounded-bl-lg p-3">
+                                <p class="text-sm leading-relaxed ${isMine ? 'text-white' : 'text-[#181113]'} dark:text-white/90">
+                                    ${text}
+                                </p>
+                            </div>
+
+                            <span class="text-xs ${isMine ? 'self-end':''} text-[#8a606b] dark:text-white/60 mt-1.5">
+                                ${time}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                            // FIXME:
+                            // ${isMine && seen === 'seen' ? `
+                            //     <span class="text-xs text-[#8a606b] dark:text-white/60 mt-1.5 flex items-center self-end gap-1">
+                            //         Đã xem 
+                            //         <span class="material-symbols-outlined text-base text-primary">done_all</span>
+                            //     </span>
+                            // ` : ''}
+                chat_container.innerHTML += html;
+                document.querySelector(".scrollBottom").scrollIntoView({behavior:'smooth'});
+                document.querySelector(".scrollBottom").classList.remove('scrollBottom');
+            @endif
+        }
+        
+        
+    </script>
+@endsection
 
 </html>

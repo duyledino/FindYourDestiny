@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Str;
 
 class Message extends Model
 {
@@ -11,12 +12,17 @@ class Message extends Model
     protected $primaryKey = 'message_id';
     public $incrementing = false;   // UUID is not auto-increment
     protected $keyType = 'string';  // UUID stored as string
+    public $update_at = null;
 
+    public const UPDATED_AT = null;
+    public const CREATED_AT = null;
     protected $fillable = [
+        "message_id",
         'chat_id',
         'user_id',
         'content',
-        'create_at'
+        'create_at',
+        "status"
     ];
 
     /**

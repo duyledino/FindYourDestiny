@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Str;
 use \Illuminate\Foundation\Auth\User as Authenticatable;
+use function PHPUnit\Framework\returnArgument;
 
 class User extends Authenticatable
 {
@@ -30,7 +31,12 @@ class User extends Authenticatable
         'user_address',
         'year_of_birth',
         'slogan',
-        'height'
+        'height',
+        'provider_id',
+        'provider_name',
+        'verify_token',
+        'verify_at',
+        'report_time'
     ];
     public function getUserRole()
     {
@@ -39,6 +45,11 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->getUserRole->role->role_name === self::ADMIN;
+    }
+
+    public function amount()
+    {
+        return $this->hasOne(AmountToConnect::class, "user_id", "user_id");
     }
 
     public function hobbies()
@@ -52,6 +63,10 @@ class User extends Authenticatable
     public function connect()
     {
         return $this->hasOne(Connect::class, "user_id", "user_id");
+    }
+    public function chat()
+    {
+        return $this->hasMany(Chat::class, "user_id", "user_id");
     }
     protected static function boot()
     {

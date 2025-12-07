@@ -9,6 +9,8 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -151,15 +153,13 @@
                                             dùng</p>
                                         <input
                                             class="form-input flex h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full p-3 text-base font-normal leading-normal placeholder:text-[#8a606b]"
-                                            placeholder="Nhập tên người dùng" type="text" name="user_name"
-                                            value="" />
+                                            placeholder="Nhập tên người dùng" type="text" name="user_name" value="" />
                                     </label>
                                     <label class="flex flex-col">
                                         <p class="pb-2 text-sm font-medium text-[#181113] dark:text-white">Email</p>
                                         <input
                                             class="form-input flex h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full p-3 text-base font-normal leading-normal placeholder:text-[#8a606b]"
-                                            placeholder="Nhập email của bạn" type="email" name="email"
-                                            value="" />
+                                            placeholder="Nhập email của bạn" type="email" name="email" value="" />
                                     </label>
                                 </div>
                                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -168,8 +168,7 @@
                                         <div class="relative w-full">
                                             <input
                                                 class="form-input flex h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full p-3 pr-12 text-base font-normal leading-normal placeholder:text-[#8a606b]"
-                                                placeholder="Tạo mật khẩu" type="password" value=""
-                                                name="password" />
+                                                placeholder="Tạo mật khẩu" type="password" value="" name="password" />
                                             <span
                                                 class="material-symbols-outlined password-toggle-icon text-[#8a606b]">visibility_off</span>
                                         </div>
@@ -210,8 +209,7 @@
                                         ý với
                                         <a class="font-medium text-primary hover:underline" href="#">Điều khoản
                                             Dịch
-                                            vụ</a> và <a class="font-medium text-primary hover:underline"
-                                            href="#">Chính
+                                            vụ</a> và <a class="font-medium text-primary hover:underline" href="#">Chính
                                             sách Bảo mật</a>.</label>
                                 </div>
                                 <button
@@ -232,5 +230,9 @@
         </div>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+@include('toast.toast-script')
 
 </html>
