@@ -168,17 +168,18 @@
                 $current_chat_id = request()->query('chat_id');
                 // dd($chats);
                 // dd($current_chat_id);
-                $current_chat_item = array_filter($chats ?? [], function($c) use ($current_chat_id) {
+                $filtered_array = array_filter($chats ?? [], function($c) use ($current_chat_id) {
                     return $c->chat_id == $current_chat_id; // có use mới dùng trong này được !!
                 });
-
+                $current_chat_item = array_values($filtered_array);
                 if ($current_chat_item) {
                     // dd($current_chat);
-                    // dd($current_chat_item[0]->user2_name);
+                    // dd($current_chat_item);
                     $current_chat['user2_id'] = $current_chat_item[0]->user2_id ?? null;
                     $current_chat['user2_image'] = $current_chat_item[0]->user2_image ?? null;
                     $current_chat['user2_name'] = $current_chat_item[0]->user2_name ?? null;
                 }
+                    // dd($current_chat);
             @endphp
             {{-- @dd($current_chat) --}}
             <section class="flex-1 flex flex-col bg-background-light dark:bg-background-dark relative">
@@ -435,11 +436,16 @@
         const userId = '{{ auth()->user()->user_id }}';
         console.log(chatId);
         open_aside.addEventListener('click',()=>{
+            console.log('open');
+            console.log(my_aside);
             my_aside.classList.add('left-0');
+            my_aside.classList.remove("-left-full");
         });
         close_aside.addEventListener('click',(e)=>{
             console.log(e);
-            my_aside.classList.remove('left-0')
+            my_aside.classList.remove('left-0');
+            my_aside.classList.add("-left-full");
+
         });
         // 1. Configure Pusher
 
