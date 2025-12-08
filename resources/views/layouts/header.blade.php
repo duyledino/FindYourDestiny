@@ -86,9 +86,9 @@
     class="fixed top-16 left-0 right-0 bottom-0 bg-black/50 z-[99] hidden transition-opacity lg:hidden"></div>
 
 <aside id="sidebar"
-    class="fixed top-16 left-0 z-[99] h-[calc(100vh-4rem)] w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden">
+    class="fixed top-16 left-0 z-[99] h-[calc(100vh-4rem)] w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col">
 
-    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto h-full">
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
 
         <a href="{{ route('homepage.get') }}"
             class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl @if (count(explode('/', url()->current())) === 3) bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 @else text-gray-600 hover:bg-[#f42559]/10 hover:text-[#f42559] @endif transition-colors">
@@ -138,22 +138,63 @@
             </svg>
             Blog
         </a>
+    </nav>
 
+    <div class="p-4 border-t border-gray-100 bg-gray-50/50">
         @auth
-            <div class="mt-4 pt-4 border-t border-gray-100">
-                <a href="{{ route('profile.get') }}"
-                    class="flex items-center gap-3 px-2 py-2 text-sm font-medium text-gray-600 hover:text-[#f42559] transition-colors">
-                    <img class="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm"
-                        src="{{ auth()->user()->user_image === null || auth()->user()->user_image === "" ? asset('upload/Default_profile.png') : asset('storage/' . auth()->user()->user_image) }}"
-                        alt="User avatar">
-                    <div class="flex flex-col">
-                        <span class="text-gray-800 font-semibold">{{ auth()->user()->user_name }}</span>
-                        <span class="text-xs text-gray-400">Xem hồ sơ</span>
-                    </div>
+            <div class="mb-4">
+                <a href="{{ route('checkout.get') }}"
+                    class="group flex w-full items-center justify-center gap-x-2 rounded-xl border border-pink-500/30 bg-white px-3 py-2.5 shadow-sm transition-all hover:border-pink-500 hover:bg-pink-50">
+                    <span
+                        class="flex h-5 w-5 items-center justify-center rounded-full bg-pink-500 text-white shadow-sm group-hover:bg-pink-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5">
+                            <path
+                                d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                        </svg>
+                    </span>
+                    <span class="text-sm font-bold text-[#f42559] group-hover:text-pink-600">
+                        {{ auth()->user()->connect->connect_quantity }} Connects
+                    </span>
+                </a>
+            </div>
+
+            <a href="{{ route('profile.get') }}"
+                class="flex items-center gap-3 px-2 py-2 mb-2 text-sm font-medium text-gray-600 hover:text-[#f42559] transition-colors rounded-xl hover:bg-white">
+                <img class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
+                    src="{{ auth()->user()->user_image === null || auth()->user()->user_image === "" ? asset('upload/Default_profile.png') : asset('storage/' . auth()->user()->user_image) }}"
+                    alt="User avatar">
+                <div class="flex flex-col overflow-hidden">
+                    <span class="text-gray-900 font-bold truncate">{{ auth()->user()->user_name }}</span>
+                    <span class="text-xs text-gray-500">Xem hồ sơ</span>
+                </div>
+            </a>
+
+            <a href="{{ route('logout.get') }}">
+                <button
+                    class="w-full flex items-center justify-center gap-2 rounded-xl bg-gray-200 py-2.5 text-sm font-bold text-gray-600 hover:bg-[#f42559] hover:text-white transition-all">
+                    <span class="material-symbols-outlined text-[18px]">logout</span>
+                    Logout
+                </button>
+            </a>
+
+        @else
+            <div class="flex flex-col gap-3">
+                <a href="{{ route('login.get') }}" class="w-full">
+                    <button
+                        class="w-full flex items-center justify-center rounded-full py-2.5 bg-primary/10 text-primary text-sm font-bold hover:bg-primary/20 transition-colors">
+                        Đăng nhập
+                    </button>
+                </a>
+                <a href="{{ route('register.get') }}" class="w-full">
+                    <button
+                        class="w-full flex items-center justify-center rounded-full py-2.5 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30">
+                        Đăng ký
+                    </button>
                 </a>
             </div>
         @endauth
-    </nav>
+    </div>
+
 </aside>
 
 <script defer>
