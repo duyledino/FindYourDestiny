@@ -136,10 +136,12 @@ class AuthController extends Controller
     }
     public function redirect($provider)
     {
+        // dd($provider);
         return Socialite::driver($provider)->redirect();
     }
     public function callback($provider)
     {
+        
         try {
             // Get user info from Socialite
             $socialUser = Socialite::driver($provider)->user();

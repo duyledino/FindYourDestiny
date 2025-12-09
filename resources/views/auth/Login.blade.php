@@ -127,13 +127,16 @@
                                     Google
                                 </button>
                             </a>
-                            <button
-                                class="w-full bg-white dark:bg-background-dark border border-[#e6dbde] dark:border-gray-600 text-[#181113] dark:text-white font-medium h-12 rounded flex items-center justify-center text-sm gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                                type="button">
-                                <img class="w-5 h-5" alt="Facebook logo"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ01YeNzQgCwRSoztd91IKOVzcP_jnsZux57wKRydX_5oS3zPR4sk-VE_e2uMlpyvFO1HcpmT-89BVmUMVbOh4_ii2FI_MEf2dvgMkOzW3iUYdSoNIEQhdLsDyXOkGKnmNAfjVxyvkbei1OCfkZxAvdGVV9PbPRixTRbBV4V1KAfI9ZjRsAvL2HaloGIfUVkmRoefC4rEVgHqlhC9oO63xjWFifF4KVTY8l01wDGgh6Zoc8LBDf7DGLzHzfIcDmeCEljtA2CJ8r2R0" />
-                                Facebook
-                            </button>
+                            <a href="{{ route('social.redirect.get', 'facebook') }}">
+                                <button
+                                    class="w-full bg-white dark:bg-background-dark border border-[#e6dbde] dark:border-gray-600 text-[#181113] dark:text-white font-medium h-12 rounded flex items-center justify-center text-sm gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                                    type="button">
+                                    <img class="w-5 h-5" alt="Facebook logo"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ01YeNzQgCwRSoztd91IKOVzcP_jnsZux57wKRydX_5oS3zPR4sk-VE_e2uMlpyvFO1HcpmT-89BVmUMVbOh4_ii2FI_MEf2dvgMkOzW3iUYdSoNIEQhdLsDyXOkGKnmNAfjVxyvkbei1OCfkZxAvdGVV9PbPRixTRbBV4V1KAfI9ZjRsAvL2HaloGIfUVkmRoefC4rEVgHqlhC9oO63xjWFifF4KVTY8l01wDGgh6Zoc8LBDf7DGLzHzfIcDmeCEljtA2CJ8r2R0" />
+                                    Facebook
+                                </button>
+                            </a>
+
                         </div>
                     </form>
                     <p class="text-center text-sm text-[#8a606b] dark:text-gray-300 mt-8">

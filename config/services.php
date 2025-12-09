@@ -40,5 +40,10 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET', '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'),
         'redirect' => env('GOOGLE_REDIRECT_URI', 'http://127.0.0.1:8000/login/google/callback'),
     ],
+    'facebook' => [
+        'client_id' => env('META_CLIENT_ID', ),
+        'client_secret' => env('META_CLIENT_SECRET'),
+        'redirect' => env('META_REDIRECT_URI'),
+    ],
     'returnUrl' => env('APP_URL', 'http://127.0.0.1:8000') . '/connect/checkout/result',
 ];
