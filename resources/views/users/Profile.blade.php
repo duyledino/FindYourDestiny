@@ -101,7 +101,8 @@
                                 <div class="flex flex-col items-center justify-center">
                                     <p
                                         class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">
-                                        {{ auth()->user()->user_name }}, {{ date('Y') - auth()->user()->year_of_birth }}</p>
+                                        {{ auth()->user()->user_name }}, {{ date('Y') - auth()->user()->year_of_birth }}
+                                    </p>
                                     <p
                                         class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal text-center">
                                         {{ auth()->user()->user_address == null ? 'Chưa cập nhật địa chỉ' : auth()->user()->user_address }}
@@ -118,7 +119,10 @@
                                 </button>
                                 <button
                                     class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-background-light dark:bg-background-dark/50 text-gray-800 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] flex-1 border border-primary/20">
-                                    <span class="truncate">Settings</span>
+                                    <a href="{{ route('setting.post') }}"
+                                        class="w-full h-full flex justify-center items-center">
+                                        <span class="truncate">Settings</span>
+                                    </a>
                                 </button>
                             </div>
                         </div>
@@ -222,6 +226,15 @@
             </div>
         </div>
     </div>
+    <script defer>
+        let theme = JSON.parse(localStorage.getItem('theme'));
+        if (theme === null) {
+            localStorage.setItem('theme', JSON.stringify('light'));
+        } else if (theme !== null && theme === "light") {
+        } else if (theme !== null && theme === 'dark') {
+            document.querySelector('html').classList.add('dark');
+        }
+    </script>
 @endsection
 
 

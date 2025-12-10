@@ -54,6 +54,9 @@ Route::prefix('connect')->group(function () {
     Route::middleware('auth')->get("/message", [MessageController::class,'chat'])->name('message.get');
     // Route::post('/broadcast',[MessageController::class,'broadcast'])->name('broadcast.post');
     Route::middleware('auth')->post("/message", [MessageController::class,'send'])->name('message.post');
+    Route::middleware('auth')->get('/setting',function(){
+        return view('users.setting_user');
+    })->name('setting.post');
     Route::post('checkout', [CheckoutController::class, 'checkout'])->name('checkout.post');
     Route::get('checkout', function () {
         return view('connect.Checkout');

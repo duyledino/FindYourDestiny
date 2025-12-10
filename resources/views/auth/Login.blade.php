@@ -153,6 +153,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script defer>
+    let theme = JSON.parse(localStorage.getItem('theme'));
+    if (theme === null) {
+        localStorage.setItem('theme', JSON.stringify('light'));
+    } else if (theme !== null && theme === "light") {
+    } else if (theme !== null && theme === 'dark') {
+        document.querySelector('html').classList.add('dark');
+    }
+</script>
 @include('toast.toast-script')
 
 </html>

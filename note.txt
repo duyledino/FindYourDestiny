@@ -2,6 +2,5 @@ FIXME:
 + amountToConnect
     - add const UPDATED_AT = null
     - add const CREATED_AT = null
-    - add const CREATED_AT = null
 + change uppercase to lowercase all file in resource 
 + remove register by google and facebook

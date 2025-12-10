@@ -12,6 +12,8 @@ class AmountToConnect extends Model
     protected $primaryKey = 'amountConnect_id';
     public $incrementing = false;   // UUID is not auto-increment
     protected $keyType = 'string';  // UUID stored as string
+    public const UPDATED_AT = null; 
+    public const CREATED_AT = null; 
 
     protected $fillable = [
         'amountConnect_id',

@@ -391,6 +391,13 @@
     </div>
     @endif
     <script defer>
+        let theme = JSON.parse(localStorage.getItem('theme'));
+        if (theme === null) {
+            localStorage.setItem('theme', JSON.stringify('light'));
+        } else if (theme !== null && theme === "light") {
+        } else if (theme !== null && theme === 'dark') {
+            document.querySelector('html').classList.add('dark');
+        }
         // scroll to view here
         @if ($current_chat!==null)
             document.getElementById("scrollBottom").scrollIntoView({ behavior: "smooth" });
@@ -500,7 +507,6 @@
                 document.querySelector(".scrollBottom").classList.remove('scrollBottom');
             @endif
         }
-        
         
     </script>
 @endsection

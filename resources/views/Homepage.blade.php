@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <style>
@@ -50,9 +50,9 @@
 @extends('layouts.main')
 {{-- child page here is extending their parent  --}}
 @section('content')
-    <div class="relative flex min-h-screen w-full flex-col">
+    {{-- FIX: Added bg-background-light and dark:bg-background-dark here --}}
+    <div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark transition-colors duration-300">
         <main class="flex-grow">
-            <!-- HeroSection Component -->
             <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20 ">
                 <div class="relative @container">
                     <div class="flex min-h-[520px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-lg items-center justify-center p-4 text-center"
@@ -69,10 +69,11 @@
                             </h2>
                         </div>
                         <div class="w-full max-w-lg mt-4">
+                            {{-- FIX: Added dark:bg-slate-900/90 to form and dark:text-white to input --}}
                             <form
-                                class="flex w-full flex-1 items-stretch rounded-full h-14 bg-white/90 backdrop-blur-sm p-1.5 shadow-lg">
+                                class="flex w-full flex-1 items-stretch rounded-full h-14 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-1.5 shadow-lg transition-colors">
                                 <input
-                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full text-gray-800 focus:outline-0 focus:ring-0 border-0 bg-transparent h-full placeholder:text-gray-500 px-5 text-sm font-normal leading-normal @[480px]:text-base"
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full text-gray-800 dark:text-white focus:outline-0 focus:ring-0 border-0 bg-transparent h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-5 text-sm font-normal leading-normal @[480px]:text-base"
                                     placeholder="Nhập email của bạn" type="email" />
                                 <button
                                     class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base hover:bg-opacity-90 transition-colors"
@@ -84,7 +85,6 @@
                     </div>
                 </div>
             </section>
-            <!-- Profile Showcase Grid Component -->
             <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
                 <div class="text-center mb-8 ">
                     <h2
@@ -151,7 +151,6 @@
 
                 </div>
             </section>
-            <!-- "How It Works" Section Component -->
             <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
                 <div class="flex flex-col gap-10">
                     <div class="text-center">
@@ -164,13 +163,14 @@
                             với 3 bước đơn giản.</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {{-- FIX: Changed dark:bg-background-dark/50 to dark:bg-white/5 for visibility --}}
                         <div
-                            class="flex flex-1 gap-4 rounded border border-primary/20 bg-white dark:bg-background-dark/50 p-6 flex-col items-center text-center">
+                            class="flex flex-1 gap-4 rounded border border-primary/20 bg-white dark:bg-white/5 dark:border-white/10 p-6 flex-col items-center text-center">
                             <div class="flex items-center justify-center size-12 rounded-full bg-primary/20 text-primary">
                                 <span class="material-symbols-outlined !text-3xl">person_add</span>
                             </div>
                             <div class="flex flex-col gap-1 mt-2">
-                                <h3 class="text-lg font-bold">Tạo hồ sơ</h3>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Tạo hồ sơ</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Hoàn thành hồ sơ của bạn trong vài
                                     phút với
                                     những
@@ -178,12 +178,12 @@
                             </div>
                         </div>
                         <div
-                            class="flex flex-1 gap-4 rounded border border-primary/20 bg-white dark:bg-background-dark/50 p-6 flex-col items-center text-center">
+                            class="flex flex-1 gap-4 rounded border border-primary/20 bg-white dark:bg-white/5 dark:border-white/10 p-6 flex-col items-center text-center">
                             <div class="flex items-center justify-center size-12 rounded-full bg-primary/20 text-primary">
                                 <span class="material-symbols-outlined !text-3xl">search</span>
                             </div>
                             <div class="flex flex-col gap-1 mt-2">
-                                <h3 class="text-lg font-bold">Tìm kiếm thông minh</h3>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Tìm kiếm thông minh</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Sử dụng bộ lọc nâng cao của chúng
                                     tôi để tìm
                                     kiếm
@@ -191,12 +191,12 @@
                             </div>
                         </div>
                         <div
-                            class="flex flex-1 gap-4 rounded border border-primary/20 bg-white dark:bg-background-dark/50 p-6 flex-col items-center text-center">
+                            class="flex flex-1 gap-4 rounded border border-primary/20 bg-white dark:bg-white/5 dark:border-white/10 p-6 flex-col items-center text-center">
                             <div class="flex items-center justify-center size-12 rounded-full bg-primary/20 text-primary">
                                 <span class="material-symbols-outlined !text-3xl">favorite</span>
                             </div>
                             <div class="flex flex-col gap-1 mt-2">
-                                <h3 class="text-lg font-bold">Bắt đầu kết nối</h3>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Bắt đầu kết nối</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Gửi tin nhắn, thể hiện sự quan tâm
                                     và bắt
                                     đầu những
@@ -206,8 +206,8 @@
                     </div>
                 </div>
             </section>
-            <!-- Testimonials Section -->
-            <section class="bg-primary/10 dark:bg-primary/20 py-10 sm:py-16">
+            {{-- FIX: Changed section bg to dark:bg-black/20 to separate it from the main background --}}
+            <section class="bg-primary/10 dark:bg-black/20 py-10 sm:py-16">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-8">
                         <h2
@@ -219,7 +219,8 @@
                             nghiệm của họ.</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                        <div class="bg-white dark:bg-background-dark/50 rounded p-6 shadow-sm">
+                        {{-- FIX: Changed dark:bg-background-dark/50 to dark:bg-white/5 --}}
+                        <div class="bg-white dark:bg-white/5 rounded p-6 shadow-sm border border-transparent dark:border-white/10">
                             <div class="flex items-start gap-4">
                                 <img class="size-14 rounded-full object-cover" data-alt="Photo of user Tuan Minh"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk0wCG8rMhQ39m67A3ybC3MLSiPlFI1s3mLh9pvdgFJj_ytZenR0-njLbEqvaWeSL7ccpDrKiSMp3MvQVBxFTZ5XN1nh7kxd6cBswQPSeewuJLJiGsrhXqJ5q-JCiqLgWyuwOhxXvNlHQFXX20EtLcLxmr3ddVMF1se0AvDJMdMyey7jKrAzlnmWwJgD7PoxLcQpCBbyN9u2VQ2J98sVDgCLPavoGESsnck4UhQNcsExMtXBFt1hzPIcyvGUqNflv3hMKpT6qvTHSo" />
@@ -231,12 +232,12 @@
                                         giúp
                                         chúng tôi tìm thấy
                                         nhau."</p>
-                                    <p class="mt-4 font-bold text-gray-900 dark:text-white">- Tuấn Minh &amp; Lan Anh
+                                    <p class="mt-4 font-bold text-gray-900 dark:text-white">- Tuấn Minh & Lan Anh
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white dark:bg-background-dark/50 rounded p-6 shadow-sm">
+                        <div class="bg-white dark:bg-white/5 rounded p-6 shadow-sm border border-transparent dark:border-white/10">
                             <div class="flex items-start gap-4">
                                 <img class="size-14 rounded-full object-cover" data-alt="Photo of user Mai Phuong"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5QzvjxOZqd5GtSRXOkPmXM-D6Fpuk_uYeIqL3kQ-2leLdakMeV-TsgWSr5Mt-xlPnzKR1EOTAHNxZq7--SPLUxSSb8-ppRf1WvAL4kkEa-q20ioAaM5cxx1SYREYLpPwsHPaORkeHreGHdHOVf2sb1AFOuoT0Kv1XeOJ3HaT_kY7H3TL0P4rgxoh4-VeqIiY1DEhJIc42pN5hJ6szLz1YkE2B_LnhWijuNBZ1MmDDAogtDMRRm3D5xTC0Evo80HZHBHw-tkRN56Qo" />
@@ -257,6 +258,15 @@
             </section>
         </main>
     </div>
+    <script defer>
+        let theme = JSON.parse(localStorage.getItem('theme'));
+        if (theme === null) {
+            localStorage.setItem('theme', JSON.stringify('light'));
+        } else if (theme !== null && theme === "light") {
+        } else if (theme !== null && theme === 'dark') {
+            document.querySelector('html').classList.add('dark');
+        }
+    </script>
 @endsection
 
 

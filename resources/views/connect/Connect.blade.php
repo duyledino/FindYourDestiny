@@ -545,6 +545,13 @@
     }
     // Initial Render
     renderPagination();
+    let theme = JSON.parse(localStorage.getItem('theme'));
+        if (theme === null) {
+            localStorage.setItem('theme', JSON.stringify('light'));
+        } else if (theme !== null && theme === "light") {
+        } else if (theme !== null && theme === 'dark') {
+            document.querySelector('html').classList.add('dark');
+        }
     </script>
 @endsection
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html class="light" lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -160,7 +160,7 @@
                                                 Connect</p>
                                             <input name="amount"
                                                 class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-primary/20 bg-white/50 dark:bg-black/20 focus:border-primary h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
-                                                value="{{ (int)auth()->user()->amount->amount }}" />
+                                                value="{{ (int) auth()->user()->amount->amount }}" />
                                         </label>
                                     </div>
                                     {{-- <div class="flex w-full flex-wrap items-end gap-4 px-4 py-3">
@@ -592,24 +592,24 @@
         //TODO: load hobbies
         if (hobbiesArray.length < 1) {
             const hobbyItemHTML = `
-                <span class="hobbyItem inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-sm font-medium text-primary bg-white dark:bg-gray-800 ring-1 ring-inset ring-primary/50 dark:ring-gray-700">
-                    Chưa cập nhật
-                    <button onclick="deleteHobby()" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-primary/20" type="button">
-                        <span class="material-icons-outlined !text-xs text-primary group-hover:text-primary/80">close</span>
-                        </button>
-                        </span>
-                        `;
+                    <span class="hobbyItem inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-sm font-medium text-primary bg-white dark:bg-gray-800 ring-1 ring-inset ring-primary/50 dark:ring-gray-700">
+                        Chưa cập nhật
+                        <button onclick="deleteHobby()" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-primary/20" type="button">
+                            <span class="material-icons-outlined !text-xs text-primary group-hover:text-primary/80">close</span>
+                            </button>
+                            </span>
+                            `;
             hobbiesContainer.insertAdjacentHTML('beforeend', hobbyItemHTML);
         } else {
             hobbiesArray.forEach(item => {
                 const hobbyItemHTML = `
-                <span class="hobbyItem inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-sm font-medium text-primary bg-white dark:bg-gray-800 ring-1 ring-inset ring-primary/50 dark:ring-gray-700">
-                    ${item}
-                    <button onclick="deleteHobby()" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-primary/20" type="button">
-                        <span class="material-icons-outlined !text-xs text-primary group-hover:text-primary/80">close</span>
-                        </button>
-                        </span>
-                        `;
+                    <span class="hobbyItem inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-sm font-medium text-primary bg-white dark:bg-gray-800 ring-1 ring-inset ring-primary/50 dark:ring-gray-700">
+                        ${item}
+                        <button onclick="deleteHobby()" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-primary/20" type="button">
+                            <span class="material-icons-outlined !text-xs text-primary group-hover:text-primary/80">close</span>
+                            </button>
+                            </span>
+                            `;
                 hobbiesContainer.insertAdjacentHTML('beforeend', hobbyItemHTML);
             });
         }
@@ -629,13 +629,13 @@
                 hobbiesArray = [...hobbiesArray, hobby];
                 console.log(hobbiesArray);
                 const hobbyItemHTML = `
-                <span class="hobbyItem inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-sm font-medium text-primary bg-white dark:bg-gray-800 ring-1 ring-inset ring-primary/50 dark:ring-gray-700">
-                    ${hobby}
-                    <button onclick="deleteHobby()" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-primary/20" type="button">
-                        <span class="material-icons-outlined !text-xs text-primary group-hover:text-primary/80">close</span>
-                        </button>
-                        </span>
-                        `;
+                    <span class="hobbyItem inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-sm font-medium text-primary bg-white dark:bg-gray-800 ring-1 ring-inset ring-primary/50 dark:ring-gray-700">
+                        ${hobby}
+                        <button onclick="deleteHobby()" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-primary/20" type="button">
+                            <span class="material-icons-outlined !text-xs text-primary group-hover:text-primary/80">close</span>
+                            </button>
+                            </span>
+                            `;
                 hobbiesContainer.insertAdjacentHTML('beforeend', hobbyItemHTML);
                 inputInsertHobby.value = "";
                 inputHobbies.value = hobbiesArray.join(',');
@@ -668,6 +668,13 @@
             console.log(imageDisplay.style.backgroundImage);
             imageDisplay.style.backgroundImage = `url("${imageUrl}")`;
         })
+        let theme = JSON.parse(localStorage.getItem('theme'));
+        if (theme === null) {
+            localStorage.setItem('theme', JSON.stringify('light'));
+        } else if (theme !== null && theme === "light") {
+        } else if (theme !== null && theme === 'dark') {
+            document.querySelector('html').classList.add('dark');
+        }
     </script>
 @endsection
 

@@ -86,12 +86,17 @@
     class="fixed top-16 left-0 right-0 bottom-0 bg-black/50 z-[99] hidden transition-opacity lg:hidden"></div>
 
 <aside id="sidebar"
-    class="fixed top-16 left-0 z-[99] h-[calc(100vh-4rem)] w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col">
+    class="fixed top-16 left-0 z-[99] h-[calc(100vh-4rem)] w-64 bg-white dark:bg-[#18181b] shadow-2xl dark:shadow-white/5 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col border-r dark:border-white/5">
 
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
 
         <a href="{{ route('homepage.get') }}"
-            class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl @if (count(explode('/', url()->current())) === 3) bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 @else text-gray-600 hover:bg-[#f42559]/10 hover:text-[#f42559] @endif transition-colors">
+            class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
+            @if (count(explode('/', url()->current())) === 3) 
+                bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 
+            @else 
+                text-gray-600 dark:text-gray-300 hover:bg-[#f42559]/10 hover:text-[#f42559] dark:hover:bg-[#f42559]/20 dark:hover:text-[#f42559] 
+            @endif">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
@@ -101,7 +106,12 @@
         </a>
 
         <a href="{{ route('connect.get', ['current_page' => 1]) }}"
-            class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'connect') bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 @else text-gray-600 hover:bg-[#f42559]/10 hover:text-[#f42559] @endif transition-colors">
+            class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
+            @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'connect') 
+                bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 
+            @else 
+                text-gray-600 dark:text-gray-300 hover:bg-[#f42559]/10 hover:text-[#f42559] dark:hover:bg-[#f42559]/20 dark:hover:text-[#f42559] 
+            @endif">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z">
@@ -112,7 +122,12 @@
 
         @if(auth()->user())
             <a href="{{ route('message.get') }}"
-                class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'message') bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 @else text-gray-600 hover:bg-[#f42559]/10 hover:text-[#f42559] @endif transition-colors">
+                class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
+                @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'message') 
+                    bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 
+                @else 
+                    text-gray-600 dark:text-gray-300 hover:bg-[#f42559]/10 hover:text-[#f42559] dark:hover:bg-[#f42559]/20 dark:hover:text-[#f42559] 
+                @endif">
                 <div class="relative">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -130,7 +145,7 @@
         @endif
 
         <a href="#"
-            class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-[#f42559]/10 hover:text-[#f42559] transition-colors">
+            class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-xl hover:bg-[#f42559]/10 dark:hover:bg-[#f42559]/20 hover:text-[#f42559] transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
@@ -140,11 +155,11 @@
         </a>
     </nav>
 
-    <div class="p-4 border-t border-gray-100 bg-gray-50/50">
+    <div class="p-4 border-t border-gray-100 dark:border-white/10 bg-gray-50/50 dark:bg-black/20">
         @auth
             <div class="mb-4">
                 <a href="{{ route('checkout.get') }}"
-                    class="group flex w-full items-center justify-center gap-x-2 rounded-xl border border-pink-500/30 bg-white px-3 py-2.5 shadow-sm transition-all hover:border-pink-500 hover:bg-pink-50">
+                    class="group flex w-full items-center justify-center gap-x-2 rounded-xl border border-pink-500/30 dark:border-pink-500/50 bg-white dark:bg-white/5 px-3 py-2.5 shadow-sm transition-all hover:border-pink-500 hover:bg-pink-50 dark:hover:bg-pink-500/10">
                     <span
                         class="flex h-5 w-5 items-center justify-center rounded-full bg-pink-500 text-white shadow-sm group-hover:bg-pink-400">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5">
@@ -152,26 +167,26 @@
                                 d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                         </svg>
                     </span>
-                    <span class="text-sm font-bold text-[#f42559] group-hover:text-pink-600">
+                    <span class="text-sm font-bold text-[#f42559] group-hover:text-pink-600 dark:group-hover:text-[#f42559]">
                         {{ auth()->user()->connect->connect_quantity }} Connects
                     </span>
                 </a>
             </div>
 
             <a href="{{ route('profile.get') }}"
-                class="flex items-center gap-3 px-2 py-2 mb-2 text-sm font-medium text-gray-600 hover:text-[#f42559] transition-colors rounded-xl hover:bg-white">
-                <img class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
+                class="flex items-center gap-3 px-2 py-2 mb-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#f42559] dark:hover:text-white transition-colors rounded-xl hover:bg-white dark:hover:bg-white/10">
+                <img class="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-gray-600 shadow-sm"
                     src="{{ auth()->user()->user_image === null || auth()->user()->user_image === "" ? asset('upload/Default_profile.png') : asset('storage/' . auth()->user()->user_image) }}"
                     alt="User avatar">
                 <div class="flex flex-col overflow-hidden">
-                    <span class="text-gray-900 font-bold truncate">{{ auth()->user()->user_name }}</span>
-                    <span class="text-xs text-gray-500">Xem hồ sơ</span>
+                    <span class="text-gray-900 dark:text-white font-bold truncate">{{ auth()->user()->user_name }}</span>
+                    <span class="text-xs text-gray-500 dark:text-gray-400">Xem hồ sơ</span>
                 </div>
             </a>
 
             <a href="{{ route('logout.get') }}">
                 <button
-                    class="w-full flex items-center justify-center gap-2 rounded-xl bg-gray-200 py-2.5 text-sm font-bold text-gray-600 hover:bg-[#f42559] hover:text-white transition-all">
+                    class="w-full flex items-center justify-center gap-2 rounded-xl bg-gray-200 dark:bg-white/10 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-300 hover:bg-[#f42559] hover:text-white dark:hover:bg-[#f42559] dark:hover:text-white transition-all">
                     <span class="material-symbols-outlined text-[18px]">logout</span>
                     Logout
                 </button>
@@ -181,7 +196,7 @@
             <div class="flex flex-col gap-3">
                 <a href="{{ route('login.get') }}" class="w-full">
                     <button
-                        class="w-full flex items-center justify-center rounded-full py-2.5 bg-primary/10 text-primary text-sm font-bold hover:bg-primary/20 transition-colors">
+                        class="w-full flex items-center justify-center rounded-full py-2.5 bg-primary/10 dark:bg-white/10 text-primary dark:text-white text-sm font-bold hover:bg-primary/20 dark:hover:bg-white/20 transition-colors">
                         Đăng nhập
                     </button>
                 </a>
