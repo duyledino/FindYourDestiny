@@ -13,6 +13,9 @@ class UserRole extends Model
     public $incrementing = false;    // composite key, not auto-increment
     protected $keyType = 'string';   // UUIDs are strings
 
+    public const UPDATED_AT = null;
+    public const CREATED_AT = null;
+
     protected $fillable = [
         'user_id',
         'role_id',

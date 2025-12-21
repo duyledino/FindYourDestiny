@@ -50,6 +50,8 @@
 @extends('layouts.main')
 
 @section('content')
+
+{{-- @dd() --}}
     <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
         <div class="layout-container flex h-full grow flex-col">
             <div class="flex flex-1 justify-center py-5">
@@ -127,13 +129,37 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-3 p-4 bg-white dark:bg-background-dark/50 rounded-lg">
+
+                            @php
+                            $process = 0;
+                            if (!empty(auth()->user()->user_address)) {
+                                $process += 20;
+                            }
+
+                            if (!empty(auth()->user()->hobbies)) {
+                                $process += 20;
+                            }
+
+                            if (!empty(auth()->user()->slogan)) {
+                                $process += 20;
+                            }
+
+                            if (!empty(auth()->user()->height)) {
+                                $process += 20;
+                            }
+                            if(!empty(auth()->user()->user_image)){
+                                $process += 20;
+                            }
+                            // dd(auth()->user());
+                            @endphp
+                            {{-- @dd($process) --}}
                             <div class="flex gap-6 justify-between items-center">
                                 <p class="text-gray-800 dark:text-white text-base font-medium leading-normal">Profile
                                     Completion</p>
-                                <p class="text-primary text-sm font-bold leading-normal">75%</p>
+                                <p class="text-primary text-sm font-bold leading-normal">{{ $process }}%</p>
                             </div>
                             <div class="rounded-full bg-primary/20">
-                                <div class="h-2 rounded-full bg-primary" style="width: 75%;"></div>
+                                <div class="h-2 rounded-full bg-primary" style="width: {{ $process }}%;"></div>
                             </div>
                         </div>
                         <div class="flex flex-col gap-4">

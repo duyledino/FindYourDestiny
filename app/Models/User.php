@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Str;
 use \Illuminate\Foundation\Auth\User as Authenticatable;
 use function PHPUnit\Framework\returnArgument;
@@ -17,6 +18,8 @@ class User extends Authenticatable
     protected $keyType = 'string';  // UUID stored as string
     public const ADMIN = 'admin';
     public const REGULAR = "regular";
+
+    private $user_role;
 
     public const CREATED_AT = 'create_at';  // tell Eloquent to use your column
     public const UPDATED_AT = 'update_at';
@@ -47,11 +50,29 @@ class User extends Authenticatable
         return $this->getUserRole->role->role_name === self::ADMIN;
     }
 
+    public function getPendingReport()
+    {
+        if ($this->role->role_name == 'admin') {
+            return DB::table('report')->where('status', '=', 'pending')->count();
+        }
+        return 0;
+    }
+
     public function amount()
     {
         return $this->hasOne(AmountToConnect::class, "user_id", "user_id");
     }
-
+    public function role()
+    {
+        return $this->hasOneThrough(
+            Role::class,      // Final model
+            UserRole::class,  // Intermediate model
+            'user_id',        // Foreign key on user_roles table
+            'role_id',        // Foreign key on roles table
+            'user_id',        // Local key on users table
+            'role_id'         // Local key on user_roles table
+        );
+    }
     public function hobbies()
     {
         return $this->hasMany(Hobby::class, "user_id", "user_id");

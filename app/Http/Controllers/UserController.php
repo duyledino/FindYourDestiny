@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestEditUser;
 use App\Models\AmountToConnect;
+use App\Models\Date;
 use App\Models\Hobby;
 use App\Models\User;
+use DB;
 use Illuminate\Http\Request;
 use Str;
 
@@ -29,15 +31,25 @@ class UserController extends Controller
     {
         $user = User::where('user_id', '=', $request['user_id'])->get();
         $hobbies = Hobby::where('user_id', '=', $request['user_id'])->get();
-        $amount = AmountToConnect::where('user_id','=',$request->user_id)->first();
+        $amount = AmountToConnect::where('user_id', '=', $request->user_id)->first();
         if (count($user) === 0) {
             return redirect()->route('homepage.get')->with('error', 'No user found.');
         }
-        $user[0]['amount']=$amount["amount"];
+        $user[0]['amount'] = $amount["amount"];
         $user[0]['hobbies'] = array();
         $user[0]['hobbies'] = $hobbies[0]['hobbies_name'] ?? "";
-        // dd($user);
-        return view('users.detail_user', ["user" => $user[0]]);
+        $date_exists = DB::table('chat as u')
+            ->where(function ($q) use ($request) {
+                $q->where('u.user1_id', auth()->user()->user_id ?? '')
+                    ->where('u.user2_id', $request->user_id);
+            })
+            ->orWhere(function ($q) use ($request) {
+                $q->where('u.user1_id', $request->user_id)
+                    ->where('u.user2_id', auth()->user()->user_id ?? '');
+            })
+            ->first();
+        // dd($date_exists);
+        return view('users.detail_user', ["user" => $user[0],"date_exists"=>$date_exists]);
     }
 
     public function getEdit(Request $request)
@@ -52,8 +64,8 @@ class UserController extends Controller
     public function edit(RequestEditUser $request)
     {
         // dd($request);
-        if($request["amount"] === "0" || $request["amount"] === '' || $request["amount"] === null){
-            return back()->with(["message"=>"Connect tối thiểu phải là 20","alert-type"=>"error"]);
+        if ($request["amount"] === "0" || $request["amount"] === '' || $request["amount"] === null) {
+            return back()->withInput()->with(["message" => "Connect tối thiểu phải là 20", "alert-type" => "error"]);
         }
         $path = "";
         if ($request->hasFile('user_image')) {
@@ -62,10 +74,10 @@ class UserController extends Controller
             $path = $file->storeAs('images', $fileName, 'public');
             $absolutePath = storage_path('app/public/images/' . $fileName);
             // dd($absolutePath);
-            if (file_exists($absolutePath)) {
-                // dd($absolutePath);
-                chmod($absolutePath, 0644); // 0644 is standard for files, 0755 is for folders
-            }
+            // if (file_exists($absolutePath)) {
+            //     // dd($absolutePath);
+            //     chmod($absolutePath, 0644); // 0644 is standard for files, 0755 is for folders
+            // }
             // dd($path);
         }
         $user = User::where('user_id', '=', $request->user_id)->update([
@@ -76,11 +88,12 @@ class UserController extends Controller
             "slogan" => $request->slogan,
             "year_of_birth" => $request->year_of_birth,
         ]);
+        AmountToConnect::where('user_id',"=",$request["user_id"])->update(["amount"=>$request['amount']]);
         $updateHobbies = Hobby::where('user_id', "=", $request->user_id)->update(['hobbies_name' => $request->hobbies]);
         return redirect(route('profile.edit.get', [$request->user_id]))->with([
             'message' => 'Update successfully',
             'alert-type' => 'success',
         ]);
     }
-    
+
 }

@@ -20,10 +20,17 @@
             hover:text-primary transition-colors" href="{{ route('connect.get', ['current_page' => 1]) }}">Khám phá</a>
             @if(auth()->user())
                 <a class="text-sm font-medium leading-normal
-                                    @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'message') text-primary border-b-2 border-primary @endif
-                                 hover:text-primary transition-colors" href="{{ route('message.get') }}">Tin nhắn</a>
+                                                                @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'message') text-primary border-b-2 border-primary @endif
+                                                             hover:text-primary transition-colors"
+                    href="{{ route('message.get') }}">Tin
+                    nhắn</a>
             @endif
-            <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Blog</a>
+            {{-- <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Blog</a>
+            --}}
+            @if (auth()->user() && auth()->user()->role->role_name == 'admin')
+                <a class="text-sm font-medium leading-normal hover:text-primary transition-colors"
+                    href="{{ route('dashboard.get') }}">Admin</a>
+            @endif
         </div>
         <div class="md:flex hidden items-center gap-2">
             @auth
@@ -90,8 +97,7 @@
 
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
 
-        <a href="{{ route('homepage.get') }}"
-            class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
+        <a href="{{ route('homepage.get') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
             @if (count(explode('/', url()->current())) === 3) 
                 bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 
             @else 
@@ -105,8 +111,7 @@
             Trang chủ
         </a>
 
-        <a href="{{ route('connect.get', ['current_page' => 1]) }}"
-            class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
+        <a href="{{ route('connect.get', ['current_page' => 1]) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
             @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'connect') 
                 bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 
             @else 
@@ -121,13 +126,12 @@
         </a>
 
         @if(auth()->user())
-            <a href="{{ route('message.get') }}"
-                class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
-                @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'message') 
-                    bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 
-                @else 
-                    text-gray-600 dark:text-gray-300 hover:bg-[#f42559]/10 hover:text-[#f42559] dark:hover:bg-[#f42559]/20 dark:hover:text-[#f42559] 
-                @endif">
+            <a href="{{ route('message.get') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
+                                            @if (explode('/', url()->current())[Count(explode('/', url()->current())) - 1] === 'message') 
+                                                bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 
+                                            @else 
+                                                text-gray-600 dark:text-gray-300 hover:bg-[#f42559]/10 hover:text-[#f42559] dark:hover:bg-[#f42559]/20 dark:hover:text-[#f42559] 
+                                            @endif">
                 <div class="relative">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -136,23 +140,30 @@
                     </svg>
                     <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
                         <span
-                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f42559] opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#f42559]"></span>
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full dark:bg-[#fff] bg-[#f42559] opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 dark:bg-[#fff] bg-[#f42559]"></span>
                     </span>
                 </div>
                 Tin nhắn
             </a>
         @endif
 
-        <a href="#"
-            class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-xl hover:bg-[#f42559]/10 dark:hover:bg-[#f42559]/20 hover:text-[#f42559] transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
-                </path>
-            </svg>
-            Blog
-        </a>
+        @if (auth()->user() && auth()->user()->role->role_name == 'admin')
+            <a href="{{ route('dashboard.get') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors
+                        @if(request()->routeIs('dashboard.get')) 
+                            bg-[#f42559] text-white shadow-md shadow-[#f42559]/30 
+                        @else 
+                            text-gray-600 dark:text-gray-300 hover:bg-[#f42559]/10 hover:text-[#f42559] dark:hover:bg-[#f42559]/20 dark:hover:text-[#f42559] 
+                        @endif">
+
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                    </path>
+                </svg>
+                Admin
+            </a>
+        @endif
     </nav>
 
     <div class="p-4 border-t border-gray-100 dark:border-white/10 bg-gray-50/50 dark:bg-black/20">
@@ -167,7 +178,8 @@
                                 d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                         </svg>
                     </span>
-                    <span class="text-sm font-bold text-[#f42559] group-hover:text-pink-600 dark:group-hover:text-[#f42559]">
+                    <span
+                        class="text-sm font-bold text-[#f42559] group-hover:text-pink-600 dark:group-hover:text-[#f42559]">
                         {{ auth()->user()->connect->connect_quantity }} Connects
                     </span>
                 </a>
@@ -214,12 +226,9 @@
 
 <script defer>
     const menu_icon = document.querySelector("#menu_icon");
-
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
-
-    menu_icon.addEventListener('click',toggleSidebar);
-
+    menu_icon.addEventListener('click', toggleSidebar);
     function toggleSidebar() {
         if (sidebar.classList.contains('-translate-x-full')) {
             // Open Sidebar

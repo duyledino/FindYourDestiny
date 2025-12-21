@@ -60,8 +60,8 @@
 @section('content')
     {{-- @dd($users) --}}
     <div class="relative flex h-auto min-h-screen w-full flex-col">
-        <main class="flex-grow container mx-auto px-10 py-8">
-            <div class="lg:mb-0 mb-3 flex flex-1 items-center justify-end gap-4">
+        <main class="sm:grow sm:block flex flex-col items-center container mx-auto px-10 py-8">
+            <div class="lg:mb-0 mb-3 self-end flex flex-1 items-center justify-end gap-4">
                 <label class="flex flex-col min-w-40 !h-10 w-full max-w-sm">
                     <div class="flex w-full flex-1 items-stretch rounded-full h-full">
                         <div

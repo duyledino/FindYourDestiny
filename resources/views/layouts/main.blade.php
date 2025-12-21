@@ -4,6 +4,25 @@
 <head>
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #221014;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #49222c;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f42559;
+        }
+    </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display h-screen text-gray-800 dark:text-gray-200">
@@ -18,7 +37,7 @@
     @include('toast.toast-script')
 
     {{-- @dd(url()->current()); --}}
-    @if (str_contains( url()->current(),'message') === false)
+    @if (str_contains(url()->current(), 'message') === false)
         @include('layouts.footer')
     @endif
 </body>

@@ -198,6 +198,16 @@
                                             class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-not-allowed items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-gray-500 text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">
                                             <span class="truncate">Người dùng không hoạt động</span>
                                         </button>
+                                    @elseif(auth()->user() != null && auth()->user()->user_id == $user->user_id)
+                                        <button type="button"
+                                            class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-not-allowed items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-gray-500 text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">
+                                            <span class="truncate">Không thể kết nối chính mình</span>
+                                        </button>
+                                    @elseif($date_exists != null)
+                                        <button type="button"
+                                            class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-not-allowed items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-gray-500 text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">
+                                            <span class="truncate">Đã thực hiện kết nối</span>
+                                        </button>
                                     @else
                                         <button type="button" onclick="openModal()"
                                             class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">

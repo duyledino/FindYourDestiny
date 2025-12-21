@@ -20,7 +20,9 @@ class Report extends Model
         'user_been_reported_name',
         'user_been_reported_id',
         'content',
+        'status', // done, reject, pending
         'create_at',
+        'report_image'
     ];
 
     /**

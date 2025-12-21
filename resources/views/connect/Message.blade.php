@@ -103,7 +103,7 @@
             </aside>
             <aside
                 id="my_aside"
-                class="sm:hidden transition-all absolute inset-0 z-10 flex w-full -left-full shrink-0 border-r border-solid border-black/10 dark:border-white/10  flex-col bg-white dark:bg-background-dark/50">
+                class="sm:hidden transition-all absolute inset-0 z-10 flex w-full left-0 shrink-0 border-r border-solid border-black/10 dark:border-white/10  flex-col bg-white dark:bg-background-dark/50">
                 <div class="p-4 border-b border-solid border-black/10 dark:border-white/10">
                     <div class="flex justify-between">
                         <h1 class="text-2xl font-bold text-[#181113] dark:text-white">Tin nhắn</h1>
@@ -304,89 +304,112 @@
      class="fixed z-[99] inset-0 bg-black bg-opacity-80 hidden items-center justify-center">
     
     <!-- Modal Box -->
-            <form action="{{ route('report.post') }}" id="reportForm" class="bg-white sm:w-[70%] w-96 rounded-xl shadow-lg p-6" method="POST">
+            <form action="{{ route('report.post') }}" id="reportForm" class="bg-white sm:w-[70%] w-96 rounded-xl shadow-lg p-6 flex md:flex-row flex-col gap-2" method="POST" enctype="multipart/form-data">
                 @csrf
-                <h2 class="text-xl font-bold mb-4">Report User</h2>
-
-                <!-- Fields -->
-                <div class="space-y-3">
-                    <div>
-                        <label class="font-semibold">Report Name</label>
-                        <input id="report_name" 
-                            class="w-full border rounded p-2" 
-                            name="report_name"
-                            type="text" placeholder="Quấy rối, Spam, etc.">
-                            @error('report_name')
+                <div class="flex-1">
+                    <h2 class="text-xl dark:text-black font-bold mb-4">Report User</h2>
+    
+                    <!-- Fields -->
+                    <div class="space-y-3">
+                        <div>
+                            <label class="dark:text-black font-semibold">Report Name</label>
+                            <input id="report_name" 
+                                class="w-full border rounded p-2 dark:bg-background-dark" 
+                                name="report_name"
+                                type="text" placeholder="Quấy rối, Spam, etc.">
+                                @error('report_name')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                        </div>
+    
+                        <div>
+                            <label class="dark:text-black font-semibold">User ID</label>
+                            <input id="user_id" 
+                            name="user_been_reported_id"
+                                class="w-full dark:bg-background-dark border rounded p-2 bg-gray-100" 
+                                type="text" readonly 
+                                value="{{ $current_chat['user2_id'] }}"
+                                >
+                                @error('user_been_reported_id')
+                                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                            @enderror
+                        </div>
+    
+                        <div>
+                            <label class="dark:text-black font-semibold">User Name</label>
+                            <input id="user_name" 
+                            name="user_been_reported_name"
+                                class="w-full dark:bg-background-dark border rounded p-2 bg-gray-100" 
+                                type="text" readonly
+                                value="{{ $current_chat['user2_name'] }}"
+                                >
+                                @error('user_been_reported_name')
+                                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                            @enderror
+                        </div>
+    
+                        <div>
+                            <label class="dark:text-black font-semibold">Content</label>
+                            <textarea id="content" 
+                                name="content"
+                                    class="w-full dark:bg-background-dark border rounded p-2 h-20"></textarea>
+                            @error('content')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+    
+                        <div>
+                            <label class="dark:text-black font-semibold">Created At</label>
+                            <input id="create_at" 
+                            name="create_at"
+                                class="w-full dark:bg-background-dark border rounded p-2 bg-gray-100" 
+                                type="text" readonly
+                                value="{{ now() }}"
+                                >
+                            @error('create_at')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
+                        </div>
                     </div>
-
-                    <div>
-                        <label class="font-semibold">User ID</label>
-                        <input id="user_id" 
-                        name="user_been_reported_id"
-                            class="w-full border rounded p-2 bg-gray-100" 
-                            type="text" readonly 
-                            value="{{ $current_chat['user2_id'] }}"
-                            >
-                            @error('user_been_reported_id')
-                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="font-semibold">User Name</label>
-                        <input id="user_name" 
-                        name="user_been_reported_name"
-                            class="w-full border rounded p-2 bg-gray-100" 
-                            type="text" readonly
-                            value="{{ $current_chat['user2_name'] }}"
-                            >
-                            @error('user_been_reported_name')
-                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="font-semibold">Content</label>
-                        <textarea id="content" 
-                            name="content"
-                                class="w-full border rounded p-2 h-20"></textarea>
-                        @error('content')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="font-semibold">Created At</label>
-                        <input id="create_at" 
-                        name="create_at"
-                            class="w-full border rounded p-2 bg-gray-100" 
-                            type="text" readonly
-                            value="{{ now() }}"
-                            >
-                        @error('create_at')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
+    
+                    <!-- Buttons -->
+                    <div class="flex justify-end gap-3 mt-5">
+                        <button 
+                        type="button"
+                            onclick="closeReportModal()" 
+                            class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">
+                            Cancel
+                        </button>
+    
+                        <button 
+                        type="submit"
+                            {{-- onclick="submitReport()"  --}}
+                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                            Report
+                        </button>
                     </div>
                 </div>
+                <div class="flex-1">
+                        <h1 class="font-semibold dark:text-black">Hình report</h1>
 
-                <!-- Buttons -->
-                <div class="flex justify-end gap-3 mt-5">
-                    <button 
-                    type="button"
-                        onclick="closeReportModal()" 
-                        class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">
-                        Cancel
-                    </button>
+                        <label 
+                        id="report_image_display"
+                            for="report_image"
+                            class="w-full md:h-[95%] h-32 border-2 border-dashed border-gray-300 rounded-xl
+                                flex flex-col items-center justify-center
+                                cursor-pointer hover:border-red-500 hover:bg-red-50
+                                transition"
+                        >
+                            <span class="icon_upload material-symbols-outlined text-4xl text-gray-400">
+                                upload
+                            </span>
+                            <span class="icon_upload text-sm text-gray-500 mt-2">
+                                Click to upload image
+                            </span>
 
-                    <button 
-                    type="submit"
-                        {{-- onclick="submitReport()"  --}}
-                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                        Report
-                    </button>
-                </div>
+                            <input id="report_image" name="report_image" type="file" hidden accept=".png, .jpg, .jpeg, .webp">
+                        </label>
+                    </div>
             </form>
     </div>
     @endif
@@ -435,6 +458,38 @@
                 // const submitReport = ()=>{
                 //     document.querySelector("#reportForm").submit();
                 // }
+                const report_image = document.querySelector("#report_image");
+                const report_image_display = document.querySelector("#report_image_display");
+                const icon_upload = document.querySelectorAll(".icon_upload");
+                report_image.addEventListener('change',e=>{
+                    console.log(e.target.files);
+                    const file = e.target.files;
+                    const imageUrl = URL.createObjectURL(file[0]);
+                    report_image_display.style.backgroundImage = `url('${imageUrl}')`;
+                    report_image_display.style.backgroundSize = `cover`;
+                    icon_upload.forEach((e)=>{
+                        e.style.display = 'none';
+                    })
+                });
+                // paste image
+                document.querySelector("html").addEventListener("paste", (e) => {
+                    const items = e.clipboardData.items;
+                    // console.log(e);
+                    for (const item of items) {
+                        if (item.type.startsWith("image/")) {
+                        const file = item.getAsFile();
+                        const imageUrl = URL.createObjectURL(file);
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        report_image.files=dataTransfer.files;
+                        report_image_display.style.backgroundImage = `url('${imageUrl}')`;
+                        report_image_display.style.backgroundSize = `cover`;
+                        icon_upload.forEach((e)=>{
+                        e.style.display = 'none';
+                            })
+                        }
+                    }
+                });
         @endif
         const open_aside = document.querySelector("#open_aside");
         const close_aside = document.querySelector("#close_aside");
@@ -454,13 +509,14 @@
             my_aside.classList.add("-left-full");
 
         });
-        // 1. Configure Pusher
+        // 1. Cấu hình Pusher
 
         const pusher = new Pusher("0055932795ba120fba8b", {
             cluster: "ap1",
         });
         // 2. Subscribe to private chat channel
         const channel = pusher.subscribe("chat." + chatId);
+        //Nhận dữ liệu từ bên kia gửi
         channel.bind('my-event',(data)=>{
             if (data.user_id == userId) {
                 return;
@@ -507,6 +563,7 @@
                 document.querySelector(".scrollBottom").classList.remove('scrollBottom');
             @endif
         }
+        
         
     </script>
 @endsection

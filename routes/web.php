@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DateController;
+use App\Http\Controllers\ManageController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReportController;
 use App\Http\Middleware\AuthenticateUser;
@@ -73,3 +74,4 @@ Route::prefix("user")->name("user.")->group(function () {
     Route::get('detail/{user_id}', [UserController::class, 'detail'])->name('detail');
     Route::middleware('auth')->post('connect', [DateController::class, 'connect'])->name('date.post');
 });
+

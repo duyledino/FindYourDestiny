@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('report', function (Blueprint $table) {
             //
-            $table->string('status')->default('created'); // done, reject,pending
+            $table->string('note')->default("");
         });
     }
 
