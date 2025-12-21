@@ -247,6 +247,72 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card overflow-hidden">
+                                <div
+                                    class="px-6 py-4 border-b border-border-light dark:border-border-dark flex justify-between items-center bg-gray-50 dark:bg-white/5">
+                                    <h3 class="font-bold text-main flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary">receipt_long</span>
+                                        Purchase Transactions
+                                    </h3>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-border-light dark:divide-border-dark">
+                                        <thead class="bg-gray-50 dark:bg-white/5">
+                                            <tr>
+                                                <th class="px-6 py-3 text-left text-xs font-semibold text-sub uppercase tracking-wider"
+                                                    scope="col">Trans ID</th>
+                                                <th class="px-6 py-3 text-left text-xs font-semibold text-sub uppercase tracking-wider"
+                                                    scope="col">Date</th>
+                                                <th class="px-6 py-3 text-left text-xs font-semibold text-sub uppercase tracking-wider"
+                                                    scope="col">Amount (Connect)</th>
+                                                <th class="px-6 py-3 text-left text-xs font-semibold text-sub uppercase tracking-wider"
+                                                    scope="col">(From → To)</th>
+                                                <th class="px-6 py-3 text-left text-xs font-semibold text-sub uppercase tracking-wider"
+                                                    scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody
+                                            class="divide-y divide-border-light dark:divide-border-dark bg-surface-light dark:bg-surface-dark">
+                                            @if ($transactions != null && count($transactions) > 0)
+                                                @foreach ($transactions as $transaction)
+                                                    <tr>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-sub">
+                                                            {{ $transaction->transaction_id }}</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-main">
+                                                            {{ $transaction->create_at }}</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-main">
+                                                            {{ substr($transaction->amount,0,2) }}</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-sub">
+                                                            {{ $transaction->amount_from }} → {{ $transaction->amount_to }}
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                            <span
+                                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200">Completed</span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                    <div class="p-4 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+                                                        <span class="text-sm text-gray-500">Page {{ $page }} of {{ $total_page }}</span>
+                                                        <div class="flex gap-2">
+                                                            @if ($page > 1)
+                                                                <a href="{{ route('dashboard.get') }}?page={{ $page - 1 }}">
+                                                                    <button
+                                                                        class="px-3 py-1 text-sm border border-gray-300 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800">Prev</button>
+                                                                </a>
+                                                            @endif
+                                                            @if ($page < $total_page)
+                                                                <a href="{{ route('dashboard.get') }}?page={{ $page + 1 }}">
+                                                                    <button
+                                                                        class="px-3 py-1 text-sm border border-gray-300 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800">Next</button>
+                                                                </a>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                </div>
+                            </div>
                     </main>
                 </div>
             </div>

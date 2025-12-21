@@ -6,6 +6,7 @@ use App\Http\Requests\RequestEditUser;
 use App\Models\AmountToConnect;
 use App\Models\Date;
 use App\Models\Hobby;
+use App\Models\Transaction;
 use App\Models\User;
 use DB;
 use Illuminate\Http\Request;
@@ -13,9 +14,17 @@ use Str;
 
 class UserController extends Controller
 {
-    public function profile()
+    public function profile(Request $request)
     {
-        return view('users.Profile');
+        $page = $request->query('page') == null ? 1 : $request->query('page');
+        if (auth()->user() == null || auth()->user()->user_id == null) {
+            return redirect(route('login.get'))->with(['message' => "", "alert-type" => "error"]);
+        }
+        $user_id = auth()->user()->user_id;
+        $transactions = Transaction::where("user_id", '=', $user_id)->limit(10)->offset(10 * ($page - 1))->orderByDesc('create_at')->get();
+        // dd($transactions);
+        $total_page = ceil(Transaction::where("user_id","=",$user_id)->count()/10);
+        return view('users.Profile', ["transactions" => $transactions,"page"=>$page,"total_page"=>$total_page]);
     }
 
     public function homepage()
@@ -49,7 +58,7 @@ class UserController extends Controller
             })
             ->first();
         // dd($date_exists);
-        return view('users.detail_user', ["user" => $user[0],"date_exists"=>$date_exists]);
+        return view('users.detail_user', ["user" => $user[0], "date_exists" => $date_exists]);
     }
 
     public function getEdit(Request $request)
@@ -88,7 +97,7 @@ class UserController extends Controller
             "slogan" => $request->slogan,
             "year_of_birth" => $request->year_of_birth,
         ]);
-        AmountToConnect::where('user_id',"=",$request["user_id"])->update(["amount"=>$request['amount']]);
+        AmountToConnect::where('user_id', "=", $request["user_id"])->update(["amount" => $request['amount']]);
         $updateHobbies = Hobby::where('user_id', "=", $request->user_id)->update(['hobbies_name' => $request->hobbies]);
         return redirect(route('profile.edit.get', [$request->user_id]))->with([
             'message' => 'Update successfully',
