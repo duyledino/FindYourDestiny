@@ -26,10 +26,15 @@ class AuthController extends Controller
     public function login(RequestLogin $request)
     {
         if (Auth::attempt($request->only('email', 'password'))) {
-            //Auth::login($user); no need because Auth::attempt automatically logs in the user
-            return redirect()->route('homepage.get')->with(
-                ['message' => 'Logged in successfully!', 'alert-type' => 'success']
-            ); // redirect and send notification
+            $user = User::where("email", "=", $request['email'])->first();
+            if ($user->ban == 1) {
+                return back()->with(["message" => "User bị ban", "alert-type" => "error"]);
+            } else {
+                //Auth::login($user); no need because Auth::attempt automatically logs in the user
+                return redirect()->route('homepage.get')->with(
+                    ['message' => 'Logged in successfully!', 'alert-type' => 'success']
+                ); // redirect and send notification
+            }
         }
         return back()->with(
             ['message' => 'Invalid email or password', 'alert-type' => 'error']
@@ -49,7 +54,7 @@ class AuthController extends Controller
             "year_of_birth" => $validated['year_of_birth'],
             "verify_token" => Str::random(64),
             "verify_at" => now(),
-            'report_time'=>0
+            'report_time' => 0
         ]);
         Mail::to($user)->send(new ConfirmAccountMail($user));
         return redirect(route('register.get'))->with(['message' => 'Mail xác thực đã được gửi', 'alert-type' => 'success']);
@@ -82,7 +87,7 @@ class AuthController extends Controller
             'hobbies_id' => Str::uuid(),
             'hobbies_name' => ''
         ]);
-        AmountToConnect::create(['amountConnect_id'=>Str::uuid(),"amount"=>0,"user_id"=>$user->user_id]);
+        AmountToConnect::create(['amountConnect_id' => Str::uuid(), "amount" => 0, "user_id" => $user->user_id]);
         Auth::login($user);
         return redirect()->route('homepage.get')->with(
             ['message' => 'Account created successfully!', 'alert-type' => 'success']
@@ -141,7 +146,7 @@ class AuthController extends Controller
     }
     public function callback($provider)
     {
-        
+
         try {
             // Get user info from Socialite
             $socialUser = Socialite::driver($provider)->user();
@@ -152,6 +157,9 @@ class AuthController extends Controller
                 ->first();
 
             if ($user) {
+                if ($user->ban == 1) {
+                    return redirect(route('login.get'))->with(["message" => "User bị ban", "alert-type" => "error"]);
+                }
                 // If user exists, just update their provider ID if it's missing
                 if (!$user->provider_id) {
                     $user->update([
@@ -175,7 +183,7 @@ class AuthController extends Controller
                     "user_image" => "", // because it is already in public when server is served
                     "user_gender" => "Other",
                     "year_of_birth" => 2007,
-                    'report_time'=>0
+                    'report_time' => 0
                 ]);
                 $role = Role::where('role_name', '=', 'regular')->get();
                 UserRole::create([

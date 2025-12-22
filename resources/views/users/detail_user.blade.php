@@ -209,10 +209,17 @@
                                             <span class="truncate">Đã thực hiện kết nối</span>
                                         </button>
                                     @else
-                                        <button type="button" onclick="openModal()"
-                                            class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">
-                                            <span class="truncate">Connect Now</span>
-                                        </button>
+                                        @if ($user->ban == 1)
+                                            <button type="button"
+                                                class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-not-allowed items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-gray-500 text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">
+                                                <span class="truncate">{{ $user->user_name }} đã bị ban</span>
+                                            </button>
+                                        @else
+                                            <button type="button" onclick="openModal()"
+                                                class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 sm:flex-auto">
+                                                <span class="truncate">Connect Now</span>
+                                            </button>
+                                        @endif
                                     @endif
                                 </div>
                                 {{-- this is modal --}}

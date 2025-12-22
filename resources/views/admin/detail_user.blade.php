@@ -87,7 +87,7 @@
                 <!-- Breadcrumbs & Heading -->
                 <div class="space-y-4">
                     <nav class="flex text-sm font-medium text-sub">
-                        <a href="{{ route('dashboard.get') }}">
+                        <a href="{{ url()->previous() }}">
                             <button
                                 class="flex items-center gap-2 px-4 py-2 rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-text-main-light dark:text-text-main-dark font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                                 <span class="material-symbols-outlined text-base">arrow_back</span>
