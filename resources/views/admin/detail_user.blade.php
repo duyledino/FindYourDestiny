@@ -105,9 +105,7 @@
                                 class="px-4 py-2 rounded-lg border border-border-light dark:border-border-dark text-main bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 font-bold text-sm transition-colors">
                                 Reset Password
                             </button>
-                            <button
-                            form="update_detail_user"
-                            type="submit"
+                            <button form="update_detail_user" type="submit"
                                 class="px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary-hover font-bold text-sm shadow-lg shadow-primary/30 transition-colors flex items-center gap-2">
                                 <span class="material-symbols-outlined text-lg">save</span>
                                 Save Changes
@@ -187,7 +185,8 @@
                                 <h3 class="text-lg font-bold text-main">Account Status</h3>
                                 <span class="text-xs text-sub">Last updated: {{ $user->update_at }}</span>
                             </div>
-                            <form id="update_detail_user" action="{{ route('detail_user.post') }}" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <form id="update_detail_user" action="{{ route('detail_user.post') }}" method="post"
+                                class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 @csrf
                                 <input type="hidden" name="user_id" value="{{ $user->user_id }}">
                                 <div class="space-y-2">
@@ -204,8 +203,7 @@
                                 <div class="space-y-2">
                                     <label class="text-sm font-medium text-main">User Role</label>
                                     <div class="relative">
-                                        <select
-                                            name="role_id"
+                                        <select name="role_id"
                                             class="block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-main focus:border-primary focus:ring-primary sm:text-sm p-2.5">
                                             @foreach ($roles as $role)
                                                 <option @if ($user->role_id == $role->role_id) selected @endif
@@ -258,14 +256,25 @@
                                         <span class="material-symbols-outlined text-primary">flag</span>
                                         Reports History
                                     </h3>
-                                    <div class="flex gap-2 text-xs">
-                                        <span
-                                            class="px-2 py-1 bg-red-100 text-red-700 rounded dark:bg-red-900/30 dark:text-red-300 font-bold">2
-                                            Received</span>
-                                        <span
-                                            class="px-2 py-1 bg-gray-200 text-gray-700 rounded dark:bg-gray-700 dark:text-gray-300 font-medium">1
-                                            Created</span>
-                                    </div>
+                                    @if ($reports !== null && count($reports) > 0)
+                                        @php
+                                            $param_id_user = explode('/', url()->current())[Count(explode('/', url()->current())) - 1];
+                                            $total_created = 0;
+                                            $total_received = 0;
+                                            foreach ($reports as $key => $r) {
+                                                $total_created = $r->user_create_id == $param_id_user ? $total_created += 1 : $total_created;
+                                                $total_received = $r->user_been_reported_id == $param_id_user ? $total_received += 1 : $total_received;
+                                            }
+                                        @endphp
+                                        <div class="flex gap-2 text-xs">
+                                            <span
+                                                class="px-2 py-1 bg-red-100 text-red-700 rounded dark:bg-red-900/30 dark:text-red-300 font-bold">{{ $total_received }}
+                                                Received</span>
+                                            <span
+                                                class="px-2 py-1 bg-gray-200 text-gray-700 rounded dark:bg-gray-700 dark:text-gray-300 font-medium">{{ $total_created }}
+                                                Created</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <!-- Reports Received Table -->
                                 <div class="overflow-x-auto">
@@ -426,11 +435,14 @@
                                                 @foreach ($transactions as $transaction)
                                                     <tr>
                                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-sub">
-                                                            {{ $transaction->transaction_id }}</td>
+                                                            {{ $transaction->transaction_id }}
+                                                        </td>
                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-main">
-                                                            {{ $transaction->create_at }}</td>
+                                                            {{ $transaction->create_at }}
+                                                        </td>
                                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-main">
-                                                            {{ substr($transaction->amount,0,2) }}</td>
+                                                            {{ substr($transaction->amount, 0, 2) }}
+                                                        </td>
                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-sub">
                                                             {{ $transaction->amount_from }} → {{ $transaction->amount_to }}
                                                         </td>
