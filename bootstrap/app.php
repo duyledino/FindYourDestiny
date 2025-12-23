@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
-        $middleware->redirectTo(guests: 'login')->alias(['admin' => EnsureUserIsAdmin::class]);
+        $middleware->redirectTo('login')->alias(['admin' => EnsureUserIsAdmin::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

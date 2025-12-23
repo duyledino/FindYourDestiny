@@ -82,12 +82,6 @@ class UserController extends Controller
             $fileName = strtr(Str::uuid(), 0, 8) . "-" . $file->getClientOriginalName();
             $path = $file->storeAs('images', $fileName, 'public');
             $absolutePath = storage_path('app/public/images/' . $fileName);
-            // dd($absolutePath);
-            // if (file_exists($absolutePath)) {
-            //     // dd($absolutePath);
-            //     chmod($absolutePath, 0644); // 0644 is standard for files, 0755 is for folders
-            // }
-            // dd($path);
         }
         $user = User::where('user_id', '=', $request->user_id)->update([
             "user_image" => $path,
